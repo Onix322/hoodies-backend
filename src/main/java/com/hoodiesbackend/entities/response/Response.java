@@ -2,17 +2,15 @@ package com.hoodiesbackend.entities.response;
 
 import org.springframework.http.HttpStatus;
 
-import java.util.Optional;
-
-public class Response<T> {
+public class Response {
     private int status;
     private String message;
-    private T response;
+    private Object result;
 
-    private Response(int status, String message, T response) {
+    private Response(int status, String message, Object result) {
         this.status = status;
         this.message = message;
-        this.response = response;
+        this.result = result;
     }
 
     public int getStatus() {
@@ -31,42 +29,48 @@ public class Response<T> {
         this.message = message;
     }
 
-    public T getResponse() {
-        return response;
+    public Object getResult() {
+        return result;
     }
 
-    public void setResponse(T response) {
-        this.response = response;
+    public void setResult(Object result) {
+        this.result = result;
     }
 
-    public Boolean isResponsePresent(){
-        return response != null;
+    @Override
+    public String toString() {
+        return "Response{" +
+                "status=" + status +
+                ", message='" + message + '\'' +
+                ", result=" + result +
+                '}';
     }
 
-    static class ResponseBuilder<T>{
+    static class ResponseBuilder {
         private int status = HttpStatus.BAD_REQUEST.value();
         private String message = "";
-        private T response;
+        private Object result;
 
-        public ResponseBuilder() {}
+        public ResponseBuilder() {
+        }
 
-        public ResponseBuilder<T> setResponse(T response) {
-            this.response = response;
+        public ResponseBuilder setResult(Object result) {
+            this.result = result;
             return this;
         }
 
-        public ResponseBuilder<T> setMessage(String message) {
+        public ResponseBuilder setMessage(String message) {
             this.message = message;
             return this;
         }
 
-        public ResponseBuilder<T> setStatus(int status) {
+        public ResponseBuilder setStatus(int status) {
             this.status = status;
             return this;
         }
 
-        public Response<T> build(){
-            return new Response<>(status, message, response);
+        public Response build() {
+            return new Response(status, message, result);
         }
     }
 }

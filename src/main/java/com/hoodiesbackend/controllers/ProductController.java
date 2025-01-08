@@ -4,11 +4,10 @@ import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.response.Response;
 import com.hoodiesbackend.entities.response.ResponseHandler;
 import com.hoodiesbackend.services.impl.ProductService;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/products")
@@ -21,46 +20,37 @@ public class ProductController implements CrudController<Product>{
     }
 
     @PostMapping
-    public Response<Product> create(@RequestBody Product body) {
+    public ResponseEntity<Response> create(@RequestBody Product body) {
         return ResponseHandler.ok(productService.create(body));
     }
 
     @GetMapping("/{id}")
-    public Response<Optional<Product>> get(@PathVariable Long id) {
+    public ResponseEntity<Response> get(@PathVariable Long id) {
 
-        Optional<Product> resource = productService.read(id);
+        Product resource = productService.read(id);
 
-        return resource.isPresent() ?
-                ResponseHandler.ok(resource) :
-                ResponseHandler.notFound();
+        return ResponseHandler.ok(resource);
     }
 
     @GetMapping
-    public Response<List<Product>> getAll() {
+    public ResponseEntity<Response> getAll() {
 
         List<Product> resource = productService.readAll();
 
-        return !resource.isEmpty() ?
-                ResponseHandler.ok(resource) :
-                ResponseHandler.notFound();
+        return ResponseHandler.ok(resource);
     }
 
+    /////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
     @PutMapping
-    public Response<Product> update(@RequestBody Product body) {
+    public ResponseEntity<Response> update(@RequestBody Product body) {
         return ResponseHandler.ok(productService.create(body));
     }
 
     @DeleteMapping("/{id}")
-    public Response<Product> delete(@PathVariable Long id) {
+    public ResponseEntity<Response> delete(@PathVariable Long id) {
 
-        Response<Optional<Product>> resource =  this.get(id);
-
-        System.out.println(resource);
-        if(resource.isResponsePresent()){
-            productService.delete(resource.getResponse().get().getId());
-            return ResponseHandler.ok(resource.getResponse().get());
-        }
-
-        return ResponseHandler.notFound();
+        return ResponseHandler.ok(productService.delete(id));
     }
 }

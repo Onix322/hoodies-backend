@@ -2,19 +2,20 @@ package com.hoodiesbackend.controllers;
 
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.response.Response;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CrudController<T> {
 
-    Response<T> create(T body);
+    ResponseEntity<Response> create(T body);
 
-    Response<Optional<T>> get(Long id);
+    ResponseEntity<Response> get(Long id);
 
-    Response<List<T>> getAll();
+    ResponseEntity<Response> getAll();
 
-    Response<T> update(T entity);
+    ResponseEntity<Response> update(T entity);
 
-    Response<T> delete(Long id);
+    ResponseEntity<Response> delete(Long id);
 }

@@ -9,11 +9,11 @@ public interface CrudService<T> {
 
     T create(T entity);
 
-    Optional<T> read(Long id);
+    T read(Long id);
 
     List<T> readAll();
 
     Product update(T entity);
 
-    Boolean delete(Long id);
+    Product delete(Long id);
 }

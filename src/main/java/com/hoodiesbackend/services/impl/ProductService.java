@@ -1,12 +1,13 @@
 package com.hoodiesbackend.services.impl;
 
 import com.hoodiesbackend.entities.product.Product;
+import com.hoodiesbackend.exceptions.BadRequestException;
+import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.ProductRepository;
 import com.hoodiesbackend.services.CrudService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService implements CrudService<Product> {
@@ -24,8 +25,12 @@ public class ProductService implements CrudService<Product> {
     }
 
     @Override
-    public Optional<Product> read(Long id) {
-        return productRepository.findById(id);
+    public Product read(Long id) {
+        if(id<=0) {
+            throw new BadRequestException("Id is invalid!");
+        }
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Resource not found"));
     }
 
     @Override
@@ -39,13 +44,12 @@ public class ProductService implements CrudService<Product> {
     }
 
     @Override
-    public Boolean delete(Long id) {
-        try {
-            productRepository.deleteById(id);
-            return true;
-        } catch (Exception e) {
-            return false;
+    public Product delete(Long id) {
+        Product product = this.read(id);
+        if(id<=0) {
+            throw new BadRequestException("Id is invalid!");
         }
+        productRepository.deleteById(product.getId());
+        return product;
     }
-
 }
