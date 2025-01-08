@@ -1,19 +1,20 @@
 package com.hoodiesbackend.controllers;
 
 import com.hoodiesbackend.entities.product.Product;
+import com.hoodiesbackend.entities.response.Response;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CrudController<T> {
 
-    void create(T body);
+    Response<T> create(T body);
 
-    Optional<T> get(Long id);
+    Response<Optional<T>> get(Long id);
 
-    List<T> getAll();
+    Response<List<T>> getAll();
 
-    void update(T entity);
+    Response<T> update(T entity);
 
-    Boolean delete(Long id);
+    Response<T> delete(Long id);
 }

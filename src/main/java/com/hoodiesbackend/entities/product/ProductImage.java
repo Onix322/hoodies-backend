@@ -11,11 +11,11 @@ public class ProductImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
     @Column(name = "image")
     @Lob
-    Blob image;
+    private Blob image;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
