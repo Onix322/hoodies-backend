@@ -1,6 +1,11 @@
 package com.hoodiesbackend.entities.product;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +14,11 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "title", nullable = false)
+    @NotBlank
     private String title;
 
     @Column(name = "size", nullable = false)
@@ -20,9 +26,12 @@ public class Product {
     private Size size;
 
     @Column(name = "rating", nullable = false)
+    @Min(value = 0, message = "Rating should be between 0-5")
+    @Max(value = 5, message = "Rating should be between 0-5")
     private Integer rating;
 
     @Column(name = "description", columnDefinition = "text", nullable = false)
+    @NotBlank
     private String description;
 
     @Column(name = "product_color", nullable = false)
@@ -30,11 +39,13 @@ public class Product {
     private ProductColor productColor;
 
     @Column(name = "price", nullable = false)
+    @Min(value = 1, message = "Price should be bigger then 1")
     private Double price;
 
     @OneToMany(mappedBy = "product",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
+    @NotEmpty(message="must contain at least 1 image link")
     private List<ProductImage> productImages = new ArrayList<>();
 
     @Override

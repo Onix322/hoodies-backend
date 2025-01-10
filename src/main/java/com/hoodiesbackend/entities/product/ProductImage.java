@@ -1,24 +1,22 @@
 package com.hoodiesbackend.entities.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.sql.Blob;
 
 @Entity
 @Table(name = "product_image")
-
 public class ProductImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "image")
-    @Lob
-    private Blob image;
+    @Column(name = "image", nullable = false)
+    private String image;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id")
+    @JsonIgnore
     private Product product;
 
     public Long getId() {
@@ -29,11 +27,11 @@ public class ProductImage {
         this.id = id;
     }
 
-    public Blob getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

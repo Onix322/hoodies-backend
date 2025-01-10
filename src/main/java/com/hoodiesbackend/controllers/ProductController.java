@@ -4,12 +4,12 @@ import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.response.Response;
 import com.hoodiesbackend.entities.response.ResponseHandler;
 import com.hoodiesbackend.services.impl.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200/")
 @RestController
 @RequestMapping(value = "/products")
 public class ProductController implements CrudController<Product>{
@@ -20,36 +20,29 @@ public class ProductController implements CrudController<Product>{
         this.productService = productService;
     }
 
-    @PostMapping
-    public ResponseEntity<Response> create(@RequestBody Product body) {
+    @PostMapping("/post")
+    public ResponseEntity<Response> create(@Valid @RequestBody Product body) {
         return ResponseHandler.ok(productService.create(body));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Response> get(@PathVariable Long id) {
-
         Product resource = productService.read(id);
-
         return ResponseHandler.ok(resource);
     }
 
-    @GetMapping
+    @GetMapping("/get")
     public ResponseEntity<Response> getAll() {
-
         List<Product> resource = productService.readAll();
-
         return ResponseHandler.ok(resource);
     }
 
-    /////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////
-/////////////////////////////////////////////////////
-    @PutMapping
+    @PutMapping("/put")
     public ResponseEntity<Response> update(@RequestBody Product body) {
         return ResponseHandler.ok(productService.create(body));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Response> delete(@PathVariable Long id) {
 
         return ResponseHandler.ok(productService.delete(id));

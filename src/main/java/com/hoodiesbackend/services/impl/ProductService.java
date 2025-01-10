@@ -20,7 +20,7 @@ public class ProductService implements CrudService<Product> {
 
     @Override
     public Product create(Product product) {
-        System.out.println(product);
+        product.getProductImages().forEach(image -> image.setProduct(product));
         return productRepository.save(product);
     }
 
