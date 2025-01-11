@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/products")
-public class ProductController implements CrudController<Product>{
+public class ProductController implements CrudController<Product> {
 
     private final ProductService productService;
 
@@ -22,6 +22,7 @@ public class ProductController implements CrudController<Product>{
 
     @PostMapping("/post")
     public ResponseEntity<Response> create(@Valid @RequestBody Product body) {
+        System.out.println(body);
         return ResponseHandler.ok(productService.create(body));
     }
 
@@ -39,12 +40,11 @@ public class ProductController implements CrudController<Product>{
 
     @PutMapping("/put")
     public ResponseEntity<Response> update(@RequestBody Product body) {
-        return ResponseHandler.ok(productService.create(body));
+        return ResponseHandler.ok(productService.update(body));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Response> delete(@PathVariable Long id) {
-
         return ResponseHandler.ok(productService.delete(id));
     }
 }

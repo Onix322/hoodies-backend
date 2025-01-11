@@ -42,14 +42,14 @@ public class Product {
     @Min(value = 1, message = "Price should be bigger then 1")
     private Double price;
 
-    @OneToMany(mappedBy = "product",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "product_id")
     @NotEmpty(message="must contain at least 1 image link")
     private List<ProductImage> productImages = new ArrayList<>();
 
     @Override
     public String toString() {
+
         return "Product{" +
                 "id=" + id +
                 ", title='" + title + '\'' +

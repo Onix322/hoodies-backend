@@ -5,6 +5,7 @@ import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.ProductRepository;
 import com.hoodiesbackend.services.CrudService;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,19 +15,18 @@ public class ProductService implements CrudService<Product> {
 
     private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, EntityManager entityManager) {
         this.productRepository = productRepository;
     }
 
     @Override
     public Product create(Product product) {
-        product.getProductImages().forEach(image -> image.setProduct(product));
         return productRepository.save(product);
     }
 
     @Override
     public Product read(Long id) {
-        if(id<=0) {
+        if (id <= 0) {
             throw new BadRequestException("Id is invalid!");
         }
         return productRepository.findById(id)
@@ -40,13 +40,13 @@ public class ProductService implements CrudService<Product> {
 
     @Override
     public Product update(Product product) {
-        return productRepository.save(product);
+        return productRepository.saveAndFlush(product);
     }
 
     @Override
     public Product delete(Long id) {
         Product product = this.read(id);
-        if(id<=0) {
+        if (id <= 0) {
             throw new BadRequestException("Id is invalid!");
         }
         productRepository.deleteById(product.getId());

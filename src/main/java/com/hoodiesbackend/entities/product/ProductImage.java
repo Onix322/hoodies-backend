@@ -8,13 +8,13 @@ import jakarta.persistence.*;
 public class ProductImage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "image", nullable = false)
     private String image;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
@@ -39,7 +39,8 @@ public class ProductImage {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public ProductImage setProduct(Product product) {
         this.product = product;
+        return this;
     }
 }

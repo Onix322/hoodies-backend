@@ -13,7 +13,7 @@ public interface CrudService<T> {
 
     List<T> readAll();
 
-    Product update(T entity);
+    Product update(Product product);
 
     Product delete(Long id);
 }
