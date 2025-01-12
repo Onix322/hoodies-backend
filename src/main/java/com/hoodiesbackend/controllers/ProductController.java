@@ -1,9 +1,11 @@
 package com.hoodiesbackend.controllers;
 
 import com.hoodiesbackend.entities.product.Product;
+import com.hoodiesbackend.entities.product.dtos.productDto.ProductDto;
 import com.hoodiesbackend.entities.response.Response;
 import com.hoodiesbackend.entities.response.ResponseHandler;
-import com.hoodiesbackend.services.impl.ProductService;
+import com.hoodiesbackend.services.impl.product.ProductDtoService;
+import com.hoodiesbackend.services.impl.product.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,11 @@ import java.util.List;
 public class ProductController implements CrudController<Product> {
 
     private final ProductService productService;
+    private final ProductDtoService productDtoService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ProductDtoService productDtoService) {
         this.productService = productService;
+        this.productDtoService = productDtoService;
     }
 
     @PostMapping("/post")
@@ -34,7 +38,7 @@ public class ProductController implements CrudController<Product> {
 
     @GetMapping("/get")
     public ResponseEntity<Response> getAll() {
-        List<Product> resource = productService.readAll();
+        List<ProductDto> resource = productDtoService.readAll();
         return ResponseHandler.ok(resource);
     }
 

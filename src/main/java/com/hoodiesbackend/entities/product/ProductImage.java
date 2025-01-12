@@ -1,23 +1,19 @@
 package com.hoodiesbackend.entities.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 
 @Entity
 @Table(name = "product_image")
+@Transactional
 public class ProductImage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "image", nullable = false)
     private String image;
-
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "product_id")
-    @JsonIgnore
-    private Product product;
 
     public Long getId() {
         return id;
@@ -34,13 +30,13 @@ public class ProductImage {
     public void setImage(String image) {
         this.image = image;
     }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public ProductImage setProduct(Product product) {
-        this.product = product;
-        return this;
-    }
+//
+//    public Product getProduct() {
+//        return product;
+//    }
+//
+//    public ProductImage setProduct(Product product) {
+//        this.product = product;
+//        return this;
+//    }
 }

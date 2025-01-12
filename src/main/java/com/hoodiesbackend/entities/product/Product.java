@@ -1,6 +1,7 @@
 package com.hoodiesbackend.entities.product;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -43,9 +44,8 @@ public class Product {
     private Double price;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "product_id")
-    @NotEmpty(message="must contain at least 1 image link")
-    private List<ProductImage> productImages = new ArrayList<>();
+    @NotEmpty(message = "Must contain at least 1 image link")
+    private List<ProductImage> productImages;
 
     @Override
     public String toString() {

@@ -11,8 +11,6 @@ public interface CrudService<T> {
 
     T read(Long id);
 
-    List<T> readAll();
-
     Product update(Product product);
 
     Product delete(Long id);
