@@ -1,28 +1,30 @@
-package com.hoodiesbackend.services.impl.product;
+package com.hoodiesbackend.services.product;
 
 import com.hoodiesbackend.entities.product.Product;
+import com.hoodiesbackend.entities.product.dtos.productDto.ProductDto;
+import com.hoodiesbackend.entities.product.dtos.productDto.ProductMapper;
+import com.hoodiesbackend.entities.user.dtos.UserMapper;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.ProductRepository;
-import com.hoodiesbackend.services.CrudService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ProductService implements CrudService<Product> {
+public class ProductService {
 
     private final ProductRepository productRepository;
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    @Override
     public Product create(Product product) {
         System.out.println(product.getProductImages().size());
         product.setId(null);
         return productRepository.save(product);
     }
 
-    @Override
     public Product read(Long id) {
         if (id <= 0) {
             throw new BadRequestException("Id is invalid!");
@@ -31,12 +33,26 @@ public class ProductService implements CrudService<Product> {
                 .orElseThrow(() -> new NotFoundException("Resource not found"));
     }
 
-    @Override
+    public List<ProductDto> readAll() {
+
+        return productRepository.findAll()
+                .stream()
+                .map(ProductMapper::toDto)
+                .toList();
+    }
+
+    public List<ProductDto> readAmount(Integer amount, Integer startFrom) {
+
+        return productRepository.getAmountOfProducts(amount, startFrom)
+                .stream()
+                .map(ProductMapper::toDto)
+                .toList();
+    }
+
     public Product update(Product product) {
         return productRepository.save(product);
     }
 
-    @Override
     public Product delete(Long id) {
         Product product = this.read(id);
         if (id <= 0) {

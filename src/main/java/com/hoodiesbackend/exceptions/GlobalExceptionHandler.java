@@ -10,8 +10,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.Objects;
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
     //UNDER CONSTRUCTION
@@ -27,6 +25,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Response> handlerBadRequest(HttpMessageNotReadableException ex) {
+        return ResponseHandler.fail(HttpStatus.BAD_REQUEST, ex.getCause().getMessage());
+    }
+
+    @ExceptionHandler(PasswordException.class)
+    public ResponseEntity<Response> handlerBadRequest(PasswordException ex) {
         return ResponseHandler.fail(HttpStatus.BAD_REQUEST, ex.getCause().getMessage());
     }
 

@@ -30,13 +30,4 @@ public class ProductImage {
     public void setImage(String image) {
         this.image = image;
     }
-//
-//    public Product getProduct() {
-//        return product;
-//    }
-//
-//    public ProductImage setProduct(Product product) {
-//        this.product = product;
-//        return this;
-//    }
 }

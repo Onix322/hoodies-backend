@@ -4,8 +4,7 @@ import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.product.dtos.productDto.ProductDto;
 import com.hoodiesbackend.entities.response.Response;
 import com.hoodiesbackend.entities.response.ResponseHandler;
-import com.hoodiesbackend.services.impl.product.ProductDtoService;
-import com.hoodiesbackend.services.impl.product.ProductService;
+import com.hoodiesbackend.services.product.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,20 +13,26 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/products")
-public class ProductController implements CrudController<Product> {
+public class ProductController {
 
     private final ProductService productService;
-    private final ProductDtoService productDtoService;
 
-    public ProductController(ProductService productService, ProductDtoService productDtoService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.productDtoService = productDtoService;
     }
 
     @PostMapping("/post")
     public ResponseEntity<Response> create(@Valid @RequestBody Product body) {
         System.out.println(body);
         return ResponseHandler.ok(productService.create(body));
+    }
+
+    @PostMapping("/post/multiple")
+    public ResponseEntity<Response> create(@Valid @RequestBody List<Product> list) {
+
+        list.forEach(productService::create);
+
+        return ResponseHandler.ok(list);
     }
 
     @GetMapping("/get/{id}")
@@ -38,8 +43,13 @@ public class ProductController implements CrudController<Product> {
 
     @GetMapping("/get")
     public ResponseEntity<Response> getAll() {
-        List<ProductDto> resource = productDtoService.readAll();
+        List<ProductDto> resource = productService.readAll();
         return ResponseHandler.ok(resource);
+    }
+
+    @GetMapping("/get/amount/{amount}/{startFrom}")
+    public ResponseEntity<Response> getAmount(@PathVariable(value = "amount") int amount,@PathVariable("startFrom")  int startFrom) {
+        return ResponseHandler.ok(productService.readAmount(amount, startFrom));
     }
 
     @PutMapping("/put")
