@@ -1,5 +1,6 @@
 package com.hoodiesbackend.services.user;
 
+import com.hoodiesbackend.entities.LogIn;
 import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.entities.user.dtos.UserGetDto;
 import com.hoodiesbackend.entities.user.dtos.UserMapper;
@@ -41,6 +42,19 @@ public class UserService {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found!"));
+
+        return UserMapper.toUserGetDto(user);
+    }
+
+    public UserGetDto login(LogIn body) {
+
+        System.out.println("valid body: " + body.isValid());
+        if (!body.isValid()) {
+            throw new BadRequestException("Email or password wrong!");
+        }
+
+        User user = userRepository.readUserByEmailAndPassword(body.getEmail(), body.getPassword())
+                .orElseThrow(() -> new NotFoundException("This user doesn't exist!"));
 
         return UserMapper.toUserGetDto(user);
     }
