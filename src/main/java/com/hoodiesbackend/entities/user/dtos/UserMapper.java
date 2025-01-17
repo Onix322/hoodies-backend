@@ -11,6 +11,20 @@ public class UserMapper {
                 .setName(user.getName())
                 .setPhone(user.getPhone())
                 .setRole(user.getRole())
+                .setUserImage(user.getUserImage())
                 .build();
+    }
+
+    public static User toUserWith(UserGetDto userDto, User user){
+
+        user.setId(userDto.getId());
+        user.setEmail(userDto.getEmail());
+        user.setName(userDto.getName());
+        user.setConfirmPassword(user.getPassword());
+        user.setPhone(userDto.getPhone());
+        user.setRole(userDto.getRole());
+        user.setUserImage(userDto.getUserImage());
+
+        return user;
     }
 }

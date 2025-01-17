@@ -9,6 +9,7 @@ public class UserGetDto {
     private String phone;
     private String name;
     private Role role;
+    private String userImage;
 
     private UserGetDto(BuilderGetDto builderGetDto){
         this.id = builderGetDto.id;
@@ -16,7 +17,10 @@ public class UserGetDto {
         this.email = builderGetDto.email;
         this.phone = builderGetDto.phone;
         this.role = builderGetDto.role;
+        this.userImage = builderGetDto.userImage;
     }
+
+    public UserGetDto(){}
 
     public Long getId() {
         return id;
@@ -69,12 +73,21 @@ public class UserGetDto {
                 '}';
     }
 
+    public String getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(String userImage) {
+        this.userImage = userImage;
+    }
+
     static class BuilderGetDto{
         private Long id = 0L;
         private String email ="UNKNOWN";
         private String phone ="UNKNOWN";
         private String name ="UNKNOWN";
         private Role role = Role.CUSTOMER;
+        private String userImage = "UNKNOWN";
 
         public BuilderGetDto() {
         }
@@ -101,6 +114,11 @@ public class UserGetDto {
 
         public BuilderGetDto setEmail(String email) {
             this.email = email;
+            return this;
+        }
+
+        public BuilderGetDto setUserImage(String userImage) {
+            this.userImage = userImage;
             return this;
         }
 

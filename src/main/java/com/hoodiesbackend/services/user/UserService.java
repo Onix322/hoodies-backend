@@ -1,6 +1,6 @@
 package com.hoodiesbackend.services.user;
 
-import com.hoodiesbackend.entities.LogIn;
+import com.hoodiesbackend.entities.login.LogIn;
 import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.entities.user.dtos.UserGetDto;
 import com.hoodiesbackend.entities.user.dtos.UserMapper;
@@ -59,8 +59,14 @@ public class UserService {
         return UserMapper.toUserGetDto(user);
     }
 
-    public User update(User entity) {
-        return userRepository.save(entity);
+    public User update(UserGetDto entity) {
+
+        User userFound = userRepository.findById(entity.getId())
+                .orElseThrow(() -> new NotFoundException("User not found!"));
+
+        User userChanged = UserMapper.toUserWith(entity, userFound);
+
+        return userRepository.save(userChanged);
     }
 
     public Boolean delete(Long id) {

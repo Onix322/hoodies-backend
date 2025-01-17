@@ -1,9 +1,10 @@
 package com.hoodiesbackend.controllers;
 
-import com.hoodiesbackend.entities.LogIn;
+import com.hoodiesbackend.entities.login.LogIn;
 import com.hoodiesbackend.entities.response.Response;
 import com.hoodiesbackend.entities.response.ResponseHandler;
 import com.hoodiesbackend.entities.user.User;
+import com.hoodiesbackend.entities.user.dtos.UserGetDto;
 import com.hoodiesbackend.services.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping("/put")
-    public ResponseEntity<Response> update(@RequestBody User entity) {
+    public ResponseEntity<Response> update(@RequestBody UserGetDto entity) {
         return ResponseHandler.ok(userService.update(entity));
     }
 
