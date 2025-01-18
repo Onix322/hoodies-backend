@@ -29,6 +29,14 @@ public class Cart {
         this.products = products;
     }
 
+    public void addProduct(Product product){
+        products.add(product);
+    }
+
+    public void removeProduct(Product product){
+        products.remove(product);
+    }
+
     public User getUser() {
         return user;
     }

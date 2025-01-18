@@ -10,6 +10,7 @@ public class ProductMapper {
                 .setSize(product.getSize())
                 .setRating(product.getRating())
                 .setTitle(product.getTitle())
+                .setPrice(product.getPrice())
                 .setProductImage(product.getProductImages().get(0))
                 .build();
 

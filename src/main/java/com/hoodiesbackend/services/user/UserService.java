@@ -1,5 +1,6 @@
 package com.hoodiesbackend.services.user;
 
+import com.hoodiesbackend.entities.cart.Cart;
 import com.hoodiesbackend.entities.login.LogIn;
 import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.entities.user.dtos.UserGetDto;
@@ -8,15 +9,18 @@ import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.PasswordException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.UserRepository;
+import com.hoodiesbackend.services.cart.CartService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final CartService cartService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, CartService cartService) {
         this.userRepository = userRepository;
+        this.cartService = cartService;
     }
 
     public User create(User entity) {
@@ -32,7 +36,13 @@ public class UserService {
         }
 
         entity.setId(null);
-        return userRepository.save(entity);
+        User user = userRepository.save(entity);
+        
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cartService.create(cart);
+
+        return user;
     }
 
     public UserGetDto read(Long id) {

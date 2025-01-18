@@ -3,6 +3,7 @@ package com.hoodiesbackend.exceptions;
 import com.hoodiesbackend.entities.response.Response;
 import com.hoodiesbackend.entities.response.ResponseHandler;
 import jakarta.validation.UnexpectedTypeException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -39,7 +40,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UnexpectedTypeException.class)
-    public ResponseEntity<Response> handlerBadRequest(UnexpectedTypeException ex) {
+    public ResponseEntity<Response> handlerInternalServerError(UnexpectedTypeException ex) {
+        return ResponseHandler.fail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    }
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Response> handlerInternalServerError(DataIntegrityViolationException ex) {
         return ResponseHandler.fail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
 }

@@ -9,14 +9,24 @@ public class ProductDto {
     private String title;
     private Integer rating;
     private Size size;
+    private Double price;
     private ProductImage productImage;
 
     private ProductDto(Builder builder) {
         this.id = builder.id;
         this.title = builder.title;
         this.rating = builder.rating;
+        this.price = builder.price;
         this.size = builder.size;
         this.productImage = builder.productImage;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Long getId() {
@@ -64,6 +74,7 @@ public class ProductDto {
         private String title = "";
         private Integer rating = 0;
         private Size size = Size.S;
+        private Double price = 0.0;
         private ProductImage productImage = new ProductImage();
 
         public Builder() {}
@@ -90,6 +101,11 @@ public class ProductDto {
 
         public Builder setProductImage(ProductImage productImage) {
             this.productImage = productImage;
+            return this;
+        }
+
+        public Builder setPrice(Double price) {
+            this.price = price;
             return this;
         }
 
