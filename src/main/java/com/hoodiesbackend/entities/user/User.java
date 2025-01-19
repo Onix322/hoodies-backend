@@ -53,10 +53,6 @@ public class User {
     @Column(name = "userImage")
     private String userImage;
 
-    @OneToOne(orphanRemoval = true)
-    @JsonIgnore
-    private Cart cart;
-
     public Role getRole() {
         return role;
     }
@@ -119,14 +115,6 @@ public class User {
 
     public void setUserImage(String userImage) {
         this.userImage = userImage;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
     }
 
     @Override
