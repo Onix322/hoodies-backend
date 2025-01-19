@@ -18,7 +18,7 @@ public class Cart {
     @JoinColumn(name = "users_id", unique = true, nullable = false)
     private User user;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     private List<Product> products;
 
     public List<Product> getProducts() {

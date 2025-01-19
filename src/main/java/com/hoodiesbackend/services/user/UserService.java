@@ -83,6 +83,7 @@ public class UserService {
         if (id <= 0) {
             throw new BadRequestException("Id is invalid!");
         }
+        cartService.delete(cartService.readByUserId(id).getId());
         userRepository.deleteById(id);
         return true;
     }

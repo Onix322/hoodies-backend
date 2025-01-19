@@ -5,6 +5,7 @@ import com.hoodiesbackend.entities.response.Response;
 import com.hoodiesbackend.entities.response.ResponseHandler;
 import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.entities.user.dtos.UserGetDto;
+import com.hoodiesbackend.services.cart.CartService;
 import com.hoodiesbackend.services.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
