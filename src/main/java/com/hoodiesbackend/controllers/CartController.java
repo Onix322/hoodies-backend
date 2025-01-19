@@ -53,4 +53,9 @@ public class CartController {
         return ResponseHandler.ok(cartService.removeProductFromCart(body.getProductId(), body.getUserId()));
     }
 
+    @DeleteMapping("/remove-all/{userId}")
+    public ResponseEntity<Response> removeAll(@PathVariable Long userId) {
+        System.out.println(userId);
+        return ResponseHandler.ok(cartService.removeAll(userId));
+    }
 }

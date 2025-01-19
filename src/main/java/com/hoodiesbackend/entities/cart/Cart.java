@@ -29,11 +29,11 @@ public class Cart {
         this.products = products;
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         products.add(product);
     }
 
-    public void removeProduct(Product product){
+    public void removeProduct(Product product) {
         products.remove(product);
     }
 
@@ -45,12 +45,12 @@ public class Cart {
         this.user = user;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

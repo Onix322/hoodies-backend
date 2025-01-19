@@ -43,8 +43,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Response> handlerInternalServerError(UnexpectedTypeException ex) {
         return ResponseHandler.fail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Response> handlerInternalServerError(DataIntegrityViolationException ex) {
         return ResponseHandler.fail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    }
+
+    @ExceptionHandler(CartException.class)
+    public ResponseEntity<Response> handlerInternalServerError(CartException ex) {
+        return ResponseHandler.fail(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }

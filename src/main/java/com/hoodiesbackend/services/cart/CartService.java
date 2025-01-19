@@ -3,12 +3,14 @@ package com.hoodiesbackend.services.cart;
 import com.hoodiesbackend.entities.cart.Cart;
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.exceptions.BadRequestException;
+import com.hoodiesbackend.exceptions.CartException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.CartRepository;
 import com.hoodiesbackend.services.product.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +25,7 @@ public class CartService {
     }
 
     public Cart create(Cart cart){
+
         return cartRepository.save(cart);
     }
 
@@ -66,5 +69,14 @@ public class CartService {
         cartRepository.deleteById(id);
 
         return true;
+    }
+
+    public Boolean removeAll(Long userId){
+        Cart cart = this.readByUserId(userId);
+        cart.setProducts(new ArrayList<>());
+
+        this.update(cart);
+
+        return cart.getProducts().isEmpty();
     }
 }
