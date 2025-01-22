@@ -1,6 +1,5 @@
 package com.hoodiesbackend.entities.order;
 
-import com.hoodiesbackend.entities.cart.Cart;
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.user.User;
 import jakarta.persistence.*;

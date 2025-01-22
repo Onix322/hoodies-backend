@@ -1,7 +1,6 @@
 package com.hoodiesbackend.entities.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hoodiesbackend.entities.cart.Cart;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -14,39 +13,30 @@ public class User {
     private Long id;
 
     @Column(name = "email", nullable = false, unique = true)
-    @NotNull(message = "Email mandatory!")
-    @NotEmpty(message = "Email mandatory!")
+    @NotBlank(message = "Email mandatory!")
     @Email(message = "Enter a valid email please!")
     private String email;
 
     @Column(name = "password", nullable = false)
-    @NotNull
-    @NotEmpty(message = "Password mandatory!")
     @NotBlank(message = "You may want to enter a password!")
     @Size(message = "The size counts... between 4-32", min = 4, max = 32)
     private String password;
 
     @Column(name = "confirm_password", nullable = false)
     @Transient
-    @NotNull
-    @NotEmpty(message = "Confirm Password mandatory!")
     @NotBlank(message = "You also need to confirm the password...")
     private String confirmPassword;
 
     @Column(name = "phone", nullable = false)
-    @NotNull
-    @NotEmpty(message = "Phone mandatory!")
     @NotBlank(message = "What if we need to get in touch? Don't you think? Enter the phone number...")
     private String phone;
 
     @Column(name = "name", nullable = false)
-    @NotNull
-    @NotEmpty(message = "Name mandatory!")
     @NotBlank(message = "You don't have a name??? Sad.. ")
     private String name;
 
     @Column(name = "role", nullable = false)
-    @NotNull
+    @NotNull(message = "Role mandatory!")
     @Enumerated(EnumType.STRING)
     private Role role;
 

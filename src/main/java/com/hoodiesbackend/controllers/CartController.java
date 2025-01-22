@@ -19,37 +19,42 @@ public class CartController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<Response> createCart(@RequestBody Cart body){
+    public ResponseEntity<Response> createCart(@RequestBody Cart body) {
         return ResponseHandler.ok(cartService.create(body));
     }
 
     @GetMapping("/get")
-    public ResponseEntity<Response> getCarts(){
+    public ResponseEntity<Response> getCarts() {
         return ResponseHandler.ok(cartService.getAll());
     }
 
     @GetMapping("/get/cart/for/{id}")
-    public ResponseEntity<Response> getUserCart(@PathVariable Long id){
+    public ResponseEntity<Response> getUserCart(@PathVariable Long id) {
         return ResponseHandler.ok(cartService.readByUserId(id));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Response> deleteCart(@PathVariable Long id){
-        return ResponseHandler.ok(cartService.delete(id));
+    @PutMapping("/exist")
+    public ResponseEntity<Response> userId(@RequestBody CartDataTransfer body) {
+        return ResponseHandler.ok(cartService.verifyExistenceOfProduct(body.getUserId(), body.getProductId()));
+    }
+
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<Response> deleteCart(@PathVariable Long userId) {
+        return ResponseHandler.ok(cartService.delete(userId));
     }
 
     @PutMapping("/put")
-    public ResponseEntity<Response> updateCart(@RequestBody Cart body){
+    public ResponseEntity<Response> updateCart(@RequestBody Cart body) {
         return ResponseHandler.ok(cartService.update(body));
     }
 
     @PutMapping("/add-to-cart")
-    public ResponseEntity<Response> addToCart(@RequestBody CartDataTransfer body){
+    public ResponseEntity<Response> addToCart(@RequestBody CartDataTransfer body) {
         return ResponseHandler.ok(cartService.addProductToCart(body.getProductId(), body.getUserId()));
     }
 
     @PutMapping("/remove-from-cart")
-    public ResponseEntity<Response> removeFromCart(@RequestBody CartDataTransfer body){
+    public ResponseEntity<Response> removeFromCart(@RequestBody CartDataTransfer body) {
         return ResponseHandler.ok(cartService.removeProductFromCart(body.getProductId(), body.getUserId()));
     }
 
@@ -58,4 +63,5 @@ public class CartController {
         System.out.println(userId);
         return ResponseHandler.ok(cartService.removeAll(userId));
     }
+
 }

@@ -1,13 +1,8 @@
 package com.hoodiesbackend.entities.product;
 
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,7 +14,7 @@ public class Product {
     private Long id;
 
     @Column(name = "title", nullable = false)
-    @NotBlank
+    @NotBlank(message = "Title mandatory")
     private String title;
 
     @Column(name = "size", nullable = false)
@@ -32,11 +27,12 @@ public class Product {
     private Integer rating;
 
     @Column(name = "description", columnDefinition = "text", nullable = false)
-    @NotBlank
+    @NotBlank(message = "You must add a description")
     private String description;
 
     @Column(name = "product_color", nullable = false)
     @Enumerated(EnumType.STRING)
+    @NotNull
     private ProductColor productColor;
 
     @Column(name = "price", nullable = false)
