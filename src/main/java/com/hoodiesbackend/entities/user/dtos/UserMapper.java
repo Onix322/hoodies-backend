@@ -12,6 +12,7 @@ public class UserMapper {
                 .setPhone(user.getPhone())
                 .setRole(user.getRole())
                 .setUserImage(user.getUserImage())
+                .setActivationStatus(user.getActivationStatus())
                 .build();
     }
 
@@ -24,6 +25,7 @@ public class UserMapper {
         user.setPhone(userDto.getPhone());
         user.setRole(userDto.getRole());
         user.setUserImage(userDto.getUserImage());
+        user.setActivationStatus(userDto.getActivationStatus());
 
         return user;
     }

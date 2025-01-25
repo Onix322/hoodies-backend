@@ -52,4 +52,14 @@ public class UserController {
     public ResponseEntity<Response> delete(@PathVariable Long id) {
         return ResponseHandler.ok(userService.delete(id));
     }
+
+    @PutMapping("/deactivate/{id}")
+    public ResponseEntity<Response> deactivate(@PathVariable Long id) {
+        return ResponseHandler.ok(userService.deactivate(id));
+    }
+
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<Response> activate(@PathVariable Long id) {
+        return ResponseHandler.ok(userService.activate(id));
+    }
 }

@@ -2,6 +2,8 @@ package com.hoodiesbackend.entities.cart;
 
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.user.User;
+import com.hoodiesbackend.entities.user.dtos.UserGetDto;
+import com.hoodiesbackend.entities.user.dtos.UserMapper;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -37,8 +39,8 @@ public class Cart {
         products.remove(product);
     }
 
-    public User getUser() {
-        return user;
+    public UserGetDto getUser() {
+        return UserMapper.toUserGetDto(user);
     }
 
     public void setUser(User user) {

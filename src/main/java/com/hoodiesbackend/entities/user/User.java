@@ -3,6 +3,7 @@ package com.hoodiesbackend.entities.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "users")
@@ -40,6 +41,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "activation_status", nullable = false)
+    @NotNull(message = "Activation Status mandatory!")
+    @Enumerated(EnumType.STRING)
+    private ActivationStatus activationStatus;
+
     @Column(name = "userImage")
     private String userImage;
 
@@ -49,6 +55,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public @NotNull(message = "Activation Status mandatory!") ActivationStatus getActivationStatus() {
+        return activationStatus;
+    }
+
+    public void setActivationStatus(@NotNull(message = "Activation Status mandatory!") ActivationStatus activationStatus) {
+        this.activationStatus = activationStatus;
     }
 
     public String getName() {

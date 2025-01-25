@@ -1,5 +1,6 @@
 package com.hoodiesbackend.entities.user.dtos;
 
+import com.hoodiesbackend.entities.user.ActivationStatus;
 import com.hoodiesbackend.entities.user.Role;
 
 public class UserGetDto {
@@ -10,6 +11,7 @@ public class UserGetDto {
     private String name;
     private Role role;
     private String userImage;
+    private ActivationStatus activationStatus;
 
     private UserGetDto(BuilderGetDto builderGetDto){
         this.id = builderGetDto.id;
@@ -18,6 +20,7 @@ public class UserGetDto {
         this.phone = builderGetDto.phone;
         this.role = builderGetDto.role;
         this.userImage = builderGetDto.userImage;
+        this.activationStatus = builderGetDto.activationStatus;
     }
 
     public UserGetDto(){}
@@ -81,6 +84,14 @@ public class UserGetDto {
         this.userImage = userImage;
     }
 
+    public ActivationStatus getActivationStatus() {
+        return activationStatus;
+    }
+
+    public void setActivationStatus(ActivationStatus activationStatus) {
+        this.activationStatus = activationStatus;
+    }
+
     static class BuilderGetDto{
         private Long id = 0L;
         private String email ="UNKNOWN";
@@ -88,12 +99,18 @@ public class UserGetDto {
         private String name ="UNKNOWN";
         private Role role = Role.CUSTOMER;
         private String userImage = "UNKNOWN";
+        private ActivationStatus activationStatus = ActivationStatus.ACTIVATED;
 
         public BuilderGetDto() {
         }
 
         public BuilderGetDto setId(Long id) {
             this.id = id;
+            return this;
+        }
+
+        public BuilderGetDto setActivationStatus(ActivationStatus activationStatus) {
+            this.activationStatus = activationStatus;
             return this;
         }
 

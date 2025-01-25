@@ -2,6 +2,7 @@ package com.hoodiesbackend.services.user;
 
 import com.hoodiesbackend.entities.cart.Cart;
 import com.hoodiesbackend.entities.login.LogIn;
+import com.hoodiesbackend.entities.user.ActivationStatus;
 import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.entities.user.dtos.UserGetDto;
 import com.hoodiesbackend.entities.user.dtos.UserMapper;
@@ -66,25 +67,49 @@ public class UserService {
         User user = userRepository.readUserByEmailAndPassword(body.getEmail(), body.getPassword())
                 .orElseThrow(() -> new NotFoundException("This user doesn't exist!"));
 
-        return UserMapper.toUserGetDto(user);
+        if(user.getActivationStatus() == ActivationStatus.ACTIVATED){
+            return UserMapper.toUserGetDto(user);
+        }
+
+        throw new BadRequestException("User deactivated!");
+
     }
 
-    public User update(UserGetDto entity) {
+    public UserGetDto update(UserGetDto entity) {
 
         User userFound = userRepository.findById(entity.getId())
                 .orElseThrow(() -> new NotFoundException("User not found!"));
 
         User userChanged = UserMapper.toUserWith(entity, userFound);
 
-        return userRepository.save(userChanged);
+
+        return UserMapper.toUserGetDto(userRepository.save(userChanged));
     }
 
     public Boolean delete(Long id) {
         if (id <= 0) {
             throw new BadRequestException("Id is invalid!");
         }
-        cartService.delete(cartService.readByUserId(id).getId());
+
+        cartService.delete(id);
         userRepository.deleteById(id);
+
         return true;
+    }
+
+    public Integer deactivate(Long id) {
+        if (id <= 0) {
+            throw new BadRequestException("Id is invalid!");
+        }
+
+        return userRepository.setActivationStatus(id, ActivationStatus.DEACTIVATED);
+    }
+
+    public Integer activate(Long id) {
+        if (id <= 0) {
+            throw new BadRequestException("Id is invalid!");
+        }
+
+        return userRepository.setActivationStatus(id, ActivationStatus.ACTIVATED);
     }
 }
