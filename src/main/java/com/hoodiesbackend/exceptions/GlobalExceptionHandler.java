@@ -53,4 +53,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Response> handlerInternalServerError(CartException ex) {
         return ResponseHandler.fail(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
+
+    @ExceptionHandler(MatchingPasswords.class)
+    public ResponseEntity<Response> handlerInternalServerError(MatchingPasswords ex) {
+        return ResponseHandler.fail(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 }

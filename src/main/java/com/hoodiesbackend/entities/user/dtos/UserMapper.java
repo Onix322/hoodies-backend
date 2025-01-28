@@ -29,4 +29,11 @@ public class UserMapper {
 
         return user;
     }
+
+    public static User toUser(UserGetDto userDto){
+
+        User user = new User();
+
+        return toUserWith(userDto, user);
+    }
 }
