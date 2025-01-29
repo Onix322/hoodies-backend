@@ -27,4 +27,10 @@ public class OrderController {
     public ResponseEntity<Response> getAll() {
         return ResponseHandler.ok(orderService.getAll());
     }
+
+    @DeleteMapping("/delete/{userId}/{orderId}")
+    public ResponseEntity<Response> delete(@PathVariable Long userId, @PathVariable Long orderId) {
+        orderService.delete(userId, orderId);
+        return ResponseHandler.ok("Deleted");
+    }
 }

@@ -27,4 +27,8 @@ public class OrderService {
     public List<Order> getAll(){
         return orderRepository.findAll();
     }
+
+    public void delete(Long userId, Long orderId){
+        orderRepository.deleteOrderByUserId(userId, orderId);
+    }
 }
