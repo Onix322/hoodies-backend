@@ -2,8 +2,8 @@ package com.hoodiesbackend.controllers;
 
 import com.hoodiesbackend.entities.cart.Cart;
 import com.hoodiesbackend.entities.cart.addToCart.CartDataTransfer;
-import com.hoodiesbackend.entities.response.Response;
-import com.hoodiesbackend.entities.response.ResponseHandler;
+import com.hoodiesbackend.response.Response;
+import com.hoodiesbackend.response.ResponseHandler;
 import com.hoodiesbackend.services.cart.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

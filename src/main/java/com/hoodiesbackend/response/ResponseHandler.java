@@ -1,4 +1,4 @@
-package com.hoodiesbackend.entities.response;
+package com.hoodiesbackend.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

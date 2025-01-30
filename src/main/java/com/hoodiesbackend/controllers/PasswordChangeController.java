@@ -1,8 +1,8 @@
 package com.hoodiesbackend.controllers;
 
-import com.hoodiesbackend.entities.passwordChange.PasswordChange;
-import com.hoodiesbackend.entities.response.Response;
-import com.hoodiesbackend.entities.response.ResponseHandler;
+import com.hoodiesbackend.entities.user.passwordChange.PasswordChange;
+import com.hoodiesbackend.response.Response;
+import com.hoodiesbackend.response.ResponseHandler;
 import com.hoodiesbackend.services.user.ChangePasswordService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

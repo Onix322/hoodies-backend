@@ -1,7 +1,7 @@
 package com.hoodiesbackend.services.user;
 
 import com.hoodiesbackend.entities.cart.Cart;
-import com.hoodiesbackend.entities.login.LogIn;
+import com.hoodiesbackend.entities.user.login.LogIn;
 import com.hoodiesbackend.entities.user.ActivationStatus;
 import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.entities.user.dtos.UserGetDto;

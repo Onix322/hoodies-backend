@@ -1,7 +1,7 @@
 package com.hoodiesbackend.exceptions;
 
-import com.hoodiesbackend.entities.response.Response;
-import com.hoodiesbackend.entities.response.ResponseHandler;
+import com.hoodiesbackend.response.Response;
+import com.hoodiesbackend.response.ResponseHandler;
 import jakarta.validation.UnexpectedTypeException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

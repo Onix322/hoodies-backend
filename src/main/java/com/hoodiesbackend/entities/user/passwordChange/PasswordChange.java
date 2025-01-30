@@ -1,4 +1,4 @@
-package com.hoodiesbackend.entities.passwordChange;
+package com.hoodiesbackend.entities.user.passwordChange;
 
 public class PasswordChange {
     Long userId;

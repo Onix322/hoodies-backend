@@ -2,8 +2,8 @@ package com.hoodiesbackend.controllers;
 
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.product.dtos.productDto.ProductDto;
-import com.hoodiesbackend.entities.response.Response;
-import com.hoodiesbackend.entities.response.ResponseHandler;
+import com.hoodiesbackend.response.Response;
+import com.hoodiesbackend.response.ResponseHandler;
 import com.hoodiesbackend.services.product.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

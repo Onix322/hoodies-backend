@@ -1,7 +1,9 @@
 package com.hoodiesbackend.services.order;
 
+import com.hoodiesbackend.entities.order.ChangeOrderStatusObject;
 import com.hoodiesbackend.entities.order.Order;
 import com.hoodiesbackend.exceptions.CartException;
+import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +32,13 @@ public class OrderService {
 
     public void delete(Long userId, Long orderId){
         orderRepository.deleteOrderByUserId(userId, orderId);
+    }
+
+    public Order updateStatus(ChangeOrderStatusObject body){
+        Order order = orderRepository.findById(body.getOrderId())
+                .orElseThrow(() -> new NotFoundException("Order not found!"));
+
+        order.setStatus(body.getStatus());
+        return orderRepository.save(order);
     }
 }
