@@ -19,5 +19,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "update User u set u.activationStatus = :activationStatus where u.id = :id")
     Integer setActivationStatus(@Param("id") Long id,@Param("activationStatus")  ActivationStatus activationStatus);
 
-    Optional<User> readUserByEmailAndPassword(String email, String password);
+    Optional<User> readUserByEmail(String email);
 }

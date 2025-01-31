@@ -39,6 +39,10 @@ public class OrderService {
         orderRepository.deleteOrderByUserId(userId, orderId);
     }
 
+    public void deleteAllByUserId(Long userId){
+        orderRepository.deleteAllByUserId(userId);
+    }
+
     public OrderDto updateStatus(ChangeOrderStatusObject body){
         Order order = orderRepository.findById(body.getOrderId())
                 .orElseThrow(() -> new NotFoundException("Order not found!"));

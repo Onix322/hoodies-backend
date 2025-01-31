@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
     Optional<Cart> readCartByUserId(Long id);
-    Boolean deleteCartByUserId(Long id);
+    void deleteCartByUserId(Long id);
 
     @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END " +
             "FROM Cart c JOIN c.products p " +

@@ -20,7 +20,7 @@ public class User {
 
     @Column(name = "password", nullable = false)
     @NotBlank(message = "You may want to enter a password!")
-    @Size(message = "The size counts... between 4-32", min = 4, max = 32)
+    @Size(message = "The size counts... minimum 4 characters", min = 4)
     private String password;
 
     @Column(name = "confirm_password", nullable = false)

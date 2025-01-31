@@ -1,16 +1,19 @@
 package com.hoodiesbackend.services.user;
 
 import com.hoodiesbackend.entities.cart.Cart;
-import com.hoodiesbackend.entities.user.login.LogIn;
 import com.hoodiesbackend.entities.user.ActivationStatus;
 import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.entities.user.dtos.UserGetDto;
 import com.hoodiesbackend.entities.user.dtos.UserMapper;
+import com.hoodiesbackend.entities.user.login.LogIn;
 import com.hoodiesbackend.exceptions.BadRequestException;
-import com.hoodiesbackend.exceptions.PasswordException;
 import com.hoodiesbackend.exceptions.NotFoundException;
+import com.hoodiesbackend.exceptions.PasswordException;
 import com.hoodiesbackend.repositories.UserRepository;
 import com.hoodiesbackend.services.cart.CartService;
+import com.hoodiesbackend.services.order.OrderService;
+import com.hoodiesbackend.utils.encrypting.Encrypting;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,10 +21,14 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CartService cartService;
+    private final Encrypting encrypting;
+    private final OrderService orderService;
 
-    public UserService(UserRepository userRepository, CartService cartService) {
+    public UserService(UserRepository userRepository, CartService cartService, Encrypting encrypting, OrderService orderService) {
         this.userRepository = userRepository;
         this.cartService = cartService;
+        this.encrypting = encrypting;
+        this.orderService = orderService;
     }
 
     public User create(User entity) {
@@ -36,9 +43,11 @@ public class UserService {
             throw new PasswordException("Passwords don't match! Try again");
         }
 
+        entity.setPassword(encrypting.encode(password));
+
         entity.setId(null);
         User user = userRepository.save(entity);
-        
+
         Cart cart = new Cart();
         cart.setUser(user);
         cartService.create(cart);
@@ -59,15 +68,15 @@ public class UserService {
 
     public UserGetDto login(LogIn body) {
 
-        System.out.println("valid body: " + body.isValid());
         if (!body.isValid()) {
             throw new BadRequestException("Email or password wrong!");
         }
 
-        User user = userRepository.readUserByEmailAndPassword(body.getEmail(), body.getPassword())
+        User user = userRepository.readUserByEmail(body.getEmail())
                 .orElseThrow(() -> new NotFoundException("This user doesn't exist!"));
 
-        if(user.getActivationStatus() == ActivationStatus.ACTIVATED){
+        if (user.getActivationStatus() == ActivationStatus.ACTIVATED &&
+                encrypting.matches(body.getPassword(), user.getPassword())) {
             return UserMapper.toUserGetDto(user);
         }
 
@@ -86,15 +95,15 @@ public class UserService {
         return UserMapper.toUserGetDto(userRepository.save(userChanged));
     }
 
-    public Boolean delete(Long id) {
+    @Transactional
+    public void delete(Long id) {
         if (id <= 0) {
             throw new BadRequestException("Id is invalid!");
         }
 
+        orderService.deleteAllByUserId(id);
         cartService.delete(id);
         userRepository.deleteById(id);
-
-        return true;
     }
 
     public Integer deactivate(Long id) {

@@ -6,6 +6,7 @@ import com.hoodiesbackend.response.ResponseHandler;
 import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.entities.user.dtos.UserGetDto;
 import com.hoodiesbackend.services.user.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,9 +48,11 @@ public class UserController {
         return ResponseHandler.ok(userService.update(entity));
     }
 
+    @Transactional
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Response> delete(@PathVariable Long id) {
-        return ResponseHandler.ok(userService.delete(id));
+        userService.delete(id);
+        return ResponseHandler.ok("Deleted");
     }
 
     @DeleteMapping("/deactivate/{id}")

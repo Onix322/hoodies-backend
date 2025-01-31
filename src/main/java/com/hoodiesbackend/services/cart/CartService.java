@@ -84,7 +84,7 @@ public class CartService {
 
     public Boolean removeAll(Long userId) {
 
-        Cart cart = cartRepository.findById(userId)
+        Cart cart = cartRepository.readCartByUserId(userId)
                 .orElseThrow(() -> new NotFoundException("Cart not found!"));
 
         cart.setProducts(new ArrayList<>());
