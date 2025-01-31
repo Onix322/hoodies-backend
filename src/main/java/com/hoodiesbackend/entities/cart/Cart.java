@@ -39,8 +39,8 @@ public class Cart {
         products.remove(product);
     }
 
-    public UserGetDto getUser() {
-        return UserMapper.toUserGetDto(user);
+    public User getUser() {
+        return user;
     }
 
     public void setUser(User user) {

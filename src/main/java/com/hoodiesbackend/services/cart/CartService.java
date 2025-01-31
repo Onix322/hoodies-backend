@@ -1,6 +1,8 @@
 package com.hoodiesbackend.services.cart;
 
 import com.hoodiesbackend.entities.cart.Cart;
+import com.hoodiesbackend.entities.dtos.CartDto;
+import com.hoodiesbackend.entities.dtos.CartMapper;
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
@@ -27,14 +29,16 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public Cart update(Cart cart) {
+    public CartDto update(Cart cart) {
         System.out.println(cart);
-        return cartRepository.save(cart);
+        return CartMapper.toDto(cartRepository.save(cart));
     }
 
-    public Cart addProductToCart(Long productId, Long userId) {
+    public CartDto addProductToCart(Long productId, Long userId) {
 
-        Cart cart = this.readByUserId(userId);
+        Cart cart = cartRepository.readCartByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("Cart not found!"));
+
         Product product = productService.read(productId);
 
         cart.addProduct(product);
@@ -42,8 +46,10 @@ public class CartService {
         return this.update(cart);
     }
 
-    public Cart removeProductFromCart(Long productId, Long userId) {
-        Cart cart = this.readByUserId(userId);
+    public CartDto removeProductFromCart(Long productId, Long userId) {
+        Cart cart = cartRepository.readCartByUserId(userId)
+                .orElseThrow(() -> new NotFoundException("Cart not found!"));
+
         Product product = productService.read(productId);
 
         cart.removeProduct(product);
@@ -52,13 +58,19 @@ public class CartService {
     }
 
 
-    public List<Cart> getAll() {
-        return cartRepository.findAll();
+    public List<CartDto> getAll() {
+        return cartRepository.findAll()
+                .stream()
+                .map(CartMapper::toDto)
+                .toList();
     }
 
-    public Cart readByUserId(Long id) {
-        return cartRepository.readCartByUserId(id)
+    public CartDto readByUserId(Long id) {
+
+        Cart cart = cartRepository.readCartByUserId(id)
                 .orElseThrow(() -> new NotFoundException("Cart not found!"));
+
+        return CartMapper.toDto(cart);
     }
 
     public Boolean delete(Long userId) {
@@ -71,7 +83,10 @@ public class CartService {
     }
 
     public Boolean removeAll(Long userId) {
-        Cart cart = this.readByUserId(userId);
+
+        Cart cart = cartRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Cart not found!"));
+
         cart.setProducts(new ArrayList<>());
 
         this.update(cart);
