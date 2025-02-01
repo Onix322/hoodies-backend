@@ -12,8 +12,8 @@ import com.hoodiesbackend.exceptions.PasswordException;
 import com.hoodiesbackend.repositories.UserRepository;
 import com.hoodiesbackend.services.cart.CartService;
 import com.hoodiesbackend.services.order.OrderService;
-import com.hoodiesbackend.utils.encrypting.Encrypting;
 import jakarta.transaction.Transactional;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,13 +21,11 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final CartService cartService;
-    private final Encrypting encrypting;
     private final OrderService orderService;
 
-    public UserService(UserRepository userRepository, CartService cartService, Encrypting encrypting, OrderService orderService) {
+    public UserService(UserRepository userRepository, CartService cartService, OrderService orderService) {
         this.userRepository = userRepository;
         this.cartService = cartService;
-        this.encrypting = encrypting;
         this.orderService = orderService;
     }
 
@@ -43,7 +41,7 @@ public class UserService {
             throw new PasswordException("Passwords don't match! Try again");
         }
 
-        entity.setPassword(encrypting.encode(password));
+        entity.setPassword(BCrypt.hashpw(entity.getPassword(), BCrypt.gensalt()));
 
         entity.setId(null);
         User user = userRepository.save(entity);
@@ -76,7 +74,7 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("This user doesn't exist!"));
 
         if (user.getActivationStatus() == ActivationStatus.ACTIVATED &&
-                encrypting.matches(body.getPassword(), user.getPassword())) {
+                BCrypt.checkpw(body.getPassword(), user.getPassword())) {
             return UserMapper.toUserGetDto(user);
         }
 
