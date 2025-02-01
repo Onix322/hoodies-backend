@@ -1,9 +1,9 @@
 package com.hoodiesbackend.entities.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hoodiesbackend.entities.user.helpers.ActivationStatus;
+import com.hoodiesbackend.entities.user.helpers.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "users")

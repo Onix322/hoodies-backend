@@ -1,8 +1,7 @@
-package com.hoodiesbackend.entities.order.dtos;
+package com.hoodiesbackend.entities.order.helpers;
 
-import com.hoodiesbackend.entities.order.OrderStatus;
-import com.hoodiesbackend.entities.product.dtos.productDto.ProductDto;
-import com.hoodiesbackend.entities.user.dtos.UserGetDto;
+import com.hoodiesbackend.entities.product.helpers.ProductDto;
+import com.hoodiesbackend.entities.user.helpers.UserGetDto;
 
 import java.util.List;
 

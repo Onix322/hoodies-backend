@@ -1,7 +1,4 @@
-package com.hoodiesbackend.entities.user.dtos;
-
-import com.hoodiesbackend.entities.user.ActivationStatus;
-import com.hoodiesbackend.entities.user.Role;
+package com.hoodiesbackend.entities.user.helpers;
 
 public class UserGetDto {
 

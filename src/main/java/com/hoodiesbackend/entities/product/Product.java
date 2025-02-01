@@ -1,5 +1,8 @@
 package com.hoodiesbackend.entities.product;
 
+import com.hoodiesbackend.entities.product.helpers.ProductColor;
+import com.hoodiesbackend.entities.product.helpers.ProductImage;
+import com.hoodiesbackend.entities.product.helpers.Size;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -19,7 +22,7 @@ public class Product {
 
     @Column(name = "size", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Size size;
+    private com.hoodiesbackend.entities.product.helpers.Size size;
 
     @Column(name = "rating", nullable = false)
     @Min(value = 0, message = "Rating should be between 0-5")
@@ -74,7 +77,7 @@ public class Product {
         this.title = title;
     }
 
-    public Size getSize() {
+    public com.hoodiesbackend.entities.product.helpers.Size getSize() {
         return size;
     }
 

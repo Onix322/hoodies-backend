@@ -1,11 +1,11 @@
 package com.hoodiesbackend.services.user;
 
 import com.hoodiesbackend.entities.cart.Cart;
-import com.hoodiesbackend.entities.user.ActivationStatus;
+import com.hoodiesbackend.entities.user.helpers.ActivationStatus;
 import com.hoodiesbackend.entities.user.User;
-import com.hoodiesbackend.entities.user.dtos.UserGetDto;
-import com.hoodiesbackend.entities.user.dtos.UserMapper;
-import com.hoodiesbackend.entities.user.login.LogIn;
+import com.hoodiesbackend.entities.user.helpers.UserGetDto;
+import com.hoodiesbackend.entities.user.helpers.UserMapper;
+import com.hoodiesbackend.entities.user.helpers.LogIn;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.exceptions.PasswordException;

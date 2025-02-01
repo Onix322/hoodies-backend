@@ -1,4 +1,4 @@
-package com.hoodiesbackend.entities.user.dtos;
+package com.hoodiesbackend.entities.user.helpers;
 
 import com.hoodiesbackend.entities.user.User;
 

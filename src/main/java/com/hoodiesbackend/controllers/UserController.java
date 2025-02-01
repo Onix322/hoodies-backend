@@ -1,10 +1,10 @@
 package com.hoodiesbackend.controllers;
 
-import com.hoodiesbackend.entities.user.login.LogIn;
+import com.hoodiesbackend.entities.user.helpers.LogIn;
 import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;
 import com.hoodiesbackend.entities.user.User;
-import com.hoodiesbackend.entities.user.dtos.UserGetDto;
+import com.hoodiesbackend.entities.user.helpers.UserGetDto;
 import com.hoodiesbackend.services.user.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;

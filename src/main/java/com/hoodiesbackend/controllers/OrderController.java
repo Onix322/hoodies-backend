@@ -1,6 +1,6 @@
 package com.hoodiesbackend.controllers;
 
-import com.hoodiesbackend.entities.order.ChangeOrderStatusObject;
+import com.hoodiesbackend.entities.order.helpers.ChangeOrderStatusObject;
 import com.hoodiesbackend.entities.order.Order;
 import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;

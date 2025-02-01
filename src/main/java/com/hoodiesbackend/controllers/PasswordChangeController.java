@@ -1,6 +1,6 @@
 package com.hoodiesbackend.controllers;
 
-import com.hoodiesbackend.entities.user.passwordChange.PasswordChange;
+import com.hoodiesbackend.entities.user.helpers.PasswordChange;
 import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;
 import com.hoodiesbackend.services.user.ChangePasswordService;

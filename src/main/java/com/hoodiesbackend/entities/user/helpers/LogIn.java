@@ -1,4 +1,4 @@
-package com.hoodiesbackend.entities.user.login;
+package com.hoodiesbackend.entities.user.helpers;
 
 public class LogIn {
     private String email;

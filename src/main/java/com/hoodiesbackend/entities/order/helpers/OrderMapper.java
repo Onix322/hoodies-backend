@@ -1,10 +1,10 @@
-package com.hoodiesbackend.entities.order.dtos;
+package com.hoodiesbackend.entities.order.helpers;
 
 import com.hoodiesbackend.entities.order.Order;
-import com.hoodiesbackend.entities.product.dtos.productDto.ProductDto;
-import com.hoodiesbackend.entities.product.dtos.productDto.ProductMapper;
-import com.hoodiesbackend.entities.user.dtos.UserGetDto;
-import com.hoodiesbackend.entities.user.dtos.UserMapper;
+import com.hoodiesbackend.entities.product.helpers.ProductDto;
+import com.hoodiesbackend.entities.product.helpers.ProductMapper;
+import com.hoodiesbackend.entities.user.helpers.UserGetDto;
+import com.hoodiesbackend.entities.user.helpers.UserMapper;
 
 import java.util.List;
 

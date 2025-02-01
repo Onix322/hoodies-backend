@@ -1,8 +1,5 @@
-package com.hoodiesbackend.entities.product.dtos.productDto;
+package com.hoodiesbackend.entities.product.helpers;
 
-
-import com.hoodiesbackend.entities.product.ProductImage;
-import com.hoodiesbackend.entities.product.Size;
 
 public class ProductDto {
     private Long id;

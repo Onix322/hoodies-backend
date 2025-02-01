@@ -1,4 +1,4 @@
-package com.hoodiesbackend.entities.product.dtos.productDto;
+package com.hoodiesbackend.entities.product.helpers;
 
 import com.hoodiesbackend.entities.product.Product;
 

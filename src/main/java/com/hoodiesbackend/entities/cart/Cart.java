@@ -2,8 +2,6 @@ package com.hoodiesbackend.entities.cart;
 
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.user.User;
-import com.hoodiesbackend.entities.user.dtos.UserGetDto;
-import com.hoodiesbackend.entities.user.dtos.UserMapper;
 import jakarta.persistence.*;
 
 import java.util.List;

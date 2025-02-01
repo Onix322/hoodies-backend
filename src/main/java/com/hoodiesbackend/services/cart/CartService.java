@@ -1,8 +1,8 @@
 package com.hoodiesbackend.services.cart;
 
 import com.hoodiesbackend.entities.cart.Cart;
-import com.hoodiesbackend.entities.dtos.CartDto;
-import com.hoodiesbackend.entities.dtos.CartMapper;
+import com.hoodiesbackend.entities.cart.helpers.CartDto;
+import com.hoodiesbackend.entities.cart.helpers.CartMapper;
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;

@@ -1,8 +1,8 @@
 package com.hoodiesbackend.services.product;
 
 import com.hoodiesbackend.entities.product.Product;
-import com.hoodiesbackend.entities.product.dtos.productDto.ProductDto;
-import com.hoodiesbackend.entities.product.dtos.productDto.ProductMapper;
+import com.hoodiesbackend.entities.product.helpers.ProductDto;
+import com.hoodiesbackend.entities.product.helpers.ProductMapper;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.ProductRepository;

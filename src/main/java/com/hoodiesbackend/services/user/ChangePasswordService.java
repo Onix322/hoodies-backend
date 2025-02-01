@@ -1,6 +1,6 @@
 package com.hoodiesbackend.services.user;
 
-import com.hoodiesbackend.entities.user.passwordChange.PasswordChange;
+import com.hoodiesbackend.entities.user.helpers.PasswordChange;
 import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.exceptions.MatchingPasswords;
 import com.hoodiesbackend.exceptions.NotFoundException;

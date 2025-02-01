@@ -1,4 +1,4 @@
-package com.hoodiesbackend.entities.product;
+package com.hoodiesbackend.entities.product.helpers;
 
 public enum ProductColor {
     RED,

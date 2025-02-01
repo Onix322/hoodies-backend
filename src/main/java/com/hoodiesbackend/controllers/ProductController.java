@@ -1,7 +1,7 @@
 package com.hoodiesbackend.controllers;
 
 import com.hoodiesbackend.entities.product.Product;
-import com.hoodiesbackend.entities.product.dtos.productDto.ProductDto;
+import com.hoodiesbackend.entities.product.helpers.ProductDto;
 import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;
 import com.hoodiesbackend.services.product.ProductService;

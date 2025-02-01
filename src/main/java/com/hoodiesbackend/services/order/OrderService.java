@@ -1,9 +1,9 @@
 package com.hoodiesbackend.services.order;
 
-import com.hoodiesbackend.entities.order.ChangeOrderStatusObject;
+import com.hoodiesbackend.entities.order.helpers.ChangeOrderStatusObject;
 import com.hoodiesbackend.entities.order.Order;
-import com.hoodiesbackend.entities.order.dtos.OrderDto;
-import com.hoodiesbackend.entities.order.dtos.OrderMapper;
+import com.hoodiesbackend.entities.order.helpers.OrderDto;
+import com.hoodiesbackend.entities.order.helpers.OrderMapper;
 import com.hoodiesbackend.exceptions.CartException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.OrderRepository;

@@ -1,4 +1,4 @@
-package com.hoodiesbackend.entities.cart.addToCart;
+package com.hoodiesbackend.entities.cart.helpers;
 
 public class CartDataTransfer {
 

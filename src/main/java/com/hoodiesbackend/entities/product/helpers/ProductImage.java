@@ -1,4 +1,4 @@
-package com.hoodiesbackend.entities.product;
+package com.hoodiesbackend.entities.product.helpers;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;

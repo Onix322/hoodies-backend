@@ -1,4 +1,4 @@
-package com.hoodiesbackend.entities.order;
+package com.hoodiesbackend.entities.order.helpers;
 
 public enum OrderStatus {
     CONFIRMED,

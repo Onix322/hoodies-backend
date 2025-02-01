@@ -1,6 +1,6 @@
 package com.hoodiesbackend.repositories;
 
-import com.hoodiesbackend.entities.user.ActivationStatus;
+import com.hoodiesbackend.entities.user.helpers.ActivationStatus;
 import com.hoodiesbackend.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
