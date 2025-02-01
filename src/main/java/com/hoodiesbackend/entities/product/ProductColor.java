@@ -8,5 +8,6 @@ public enum ProductColor {
     PINK,
     GREEN,
     PURPLE,
-    LIGHTBLUE
+    LIGHTBLUE,
+    BLACK
 }
