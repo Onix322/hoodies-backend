@@ -12,6 +12,7 @@ import com.hoodiesbackend.exceptions.PasswordException;
 import com.hoodiesbackend.repositories.UserRepository;
 import com.hoodiesbackend.services.cart.CartService;
 import com.hoodiesbackend.services.order.OrderService;
+import com.hoodiesbackend.services.token.TokenService;
 import jakarta.transaction.Transactional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final CartService cartService;
     private final OrderService orderService;
+    private final TokenService tokenService;
 
-    public UserService(UserRepository userRepository, CartService cartService, OrderService orderService) {
+    public UserService(UserRepository userRepository, CartService cartService, OrderService orderService, TokenService tokenService) {
         this.userRepository = userRepository;
         this.cartService = cartService;
         this.orderService = orderService;
+        this.tokenService = tokenService;
     }
 
     public User create(User entity) {
@@ -75,6 +78,8 @@ public class UserService {
 
         if (user.getActivationStatus() == ActivationStatus.ACTIVATED &&
                 BCrypt.checkpw(body.getPassword(), user.getPassword())) {
+
+            tokenService.decode(tokenService.create(UserMapper.toUserGetDto(user)));
             return UserMapper.toUserGetDto(user);
         }
 

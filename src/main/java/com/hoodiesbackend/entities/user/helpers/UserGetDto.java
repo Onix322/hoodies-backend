@@ -89,7 +89,7 @@ public class UserGetDto {
         this.activationStatus = activationStatus;
     }
 
-    static class BuilderGetDto{
+    public static class BuilderGetDto{
         private Long id = 0L;
         private String email ="UNKNOWN";
         private String phone ="UNKNOWN";
