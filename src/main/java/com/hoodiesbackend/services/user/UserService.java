@@ -79,12 +79,10 @@ public class UserService {
         if (user.getActivationStatus() == ActivationStatus.ACTIVATED &&
                 BCrypt.checkpw(body.getPassword(), user.getPassword())) {
 
-            tokenService.decode(tokenService.create(UserMapper.toUserGetDto(user)));
             return UserMapper.toUserGetDto(user);
         }
 
         throw new BadRequestException("User deactivated!");
-
     }
 
     public UserGetDto update(UserGetDto entity) {

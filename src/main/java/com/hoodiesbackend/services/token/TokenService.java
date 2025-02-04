@@ -1,12 +1,22 @@
 package com.hoodiesbackend.services.token;
 
 import com.hoodiesbackend.entities.user.helpers.UserGetDto;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.validation.Payload;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
 
 @Service
@@ -22,16 +32,16 @@ public class TokenService {
         return Jwts.builder()
                 .subject(String.valueOf(user.getId()))
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 3000))
+                .expiration(new Date(System.currentTimeMillis() + 100000))
                 .signWith(key)
                 .compact();
     }
 
-    public void decode(String token) {
+    public Jwt<?, ?> decode(String token) {
 
-        System.out.println(Jwts.parser()
+        return Jwts.parser()
                 .verifyWith(key)
                 .build()
-                .parse(token));
+                .parse(token);
     }
 }
