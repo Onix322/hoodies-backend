@@ -67,7 +67,25 @@ public class UserService {
         return UserMapper.toUserGetDto(user);
     }
 
-    public UserGetDto login(LogIn body) {
+//    public UserGetDto login(LogIn body) {
+//
+//        if (!body.isValid()) {
+//            throw new BadRequestException("Email or password wrong!");
+//        }
+//
+//        User user = userRepository.readUserByEmail(body.getEmail())
+//                .orElseThrow(() -> new NotFoundException("This user doesn't exist!"));
+//
+//        if (user.getActivationStatus() == ActivationStatus.ACTIVATED &&
+//                BCrypt.checkpw(body.getPassword(), user.getPassword())) {
+//
+//            return UserMapper.toUserGetDto(user);
+//        }
+//
+//        throw new BadRequestException("User deactivated!");
+//    }
+
+    public String login(LogIn body) {
 
         if (!body.isValid()) {
             throw new BadRequestException("Email or password wrong!");
@@ -79,7 +97,7 @@ public class UserService {
         if (user.getActivationStatus() == ActivationStatus.ACTIVATED &&
                 BCrypt.checkpw(body.getPassword(), user.getPassword())) {
 
-            return UserMapper.toUserGetDto(user);
+            return tokenService.create(UserMapper.toUserGetDto(user));
         }
 
         throw new BadRequestException("User deactivated!");

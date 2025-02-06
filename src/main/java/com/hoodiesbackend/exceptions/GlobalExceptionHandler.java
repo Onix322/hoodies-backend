@@ -2,6 +2,7 @@ package com.hoodiesbackend.exceptions;
 
 import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.validation.UnexpectedTypeException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -57,5 +58,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MatchingPasswords.class)
     public ResponseEntity<Response> handlerInternalServerError(MatchingPasswords ex) {
         return ResponseHandler.fail(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Response> handlerExpiredJwtException(ExpiredJwtException ex) {
+        return ResponseHandler.fail(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 }

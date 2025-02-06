@@ -18,13 +18,18 @@ public class TokenController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping("/decode")
+    @PostMapping("/get-user-id")
     public ResponseEntity<Response> decode(@RequestBody String token) {
-        return ResponseHandler.ok(tokenService.decode(token));
+        return ResponseHandler.ok(tokenService.getUserId(token));
     }
 
     @PostMapping("/create")
     public ResponseEntity<Response> create(@RequestBody UserGetDto user) {
         return ResponseHandler.ok(tokenService.create(user));
+    }
+
+    @PostMapping("/valid")
+    public ResponseEntity<Response> valid(@RequestBody String token) {
+        return ResponseHandler.ok(tokenService.validateToken(token));
     }
 }
