@@ -26,7 +26,7 @@ public class TokenService {
                 .claim("name", user.getName())
                 .subject(String.valueOf(user.getId()))
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 20000))
+                .expiration(new Date(System.currentTimeMillis() + 900000))
                 .signWith(key)
                 .compact();
     }
