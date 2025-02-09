@@ -6,6 +6,7 @@ import com.hoodiesbackend.exceptions.MatchingPasswords;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.exceptions.PasswordException;
 import com.hoodiesbackend.repositories.UserRepository;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,12 +27,13 @@ public class ChangePasswordService {
             throw new PasswordException("Confirm password should be the same with New password");
         }
 
-        if (user.getPassword().equals(body.getNewPassword())) {
+        String encryptedPass = BCrypt.hashpw(body.getNewPassword(), BCrypt.gensalt());
+
+        if (user.getPassword().equals(encryptedPass)) {
             throw new MatchingPasswords("Old password can't match the new one!");
         }
-
-        user.setPassword(body.getNewPassword());
-        user.setConfirmPassword(body.getConfirmNewPassword());
+        user.setPassword(encryptedPass);
+        user.setConfirmPassword(encryptedPass);
         userRepository.save(user);
 
         return true;

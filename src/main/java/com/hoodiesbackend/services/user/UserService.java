@@ -44,7 +44,10 @@ public class UserService {
             throw new PasswordException("Passwords don't match! Try again");
         }
 
-        entity.setPassword(BCrypt.hashpw(entity.getPassword(), BCrypt.gensalt()));
+        String encryptedPass = BCrypt.hashpw(entity.getPassword(), BCrypt.gensalt());
+
+        entity.setPassword(encryptedPass);
+        entity.setConfirmPassword(encryptedPass);
 
         entity.setId(null);
         User user = userRepository.save(entity);
