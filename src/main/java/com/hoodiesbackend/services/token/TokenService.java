@@ -1,7 +1,6 @@
 package com.hoodiesbackend.services.token;
 
 import com.hoodiesbackend.entities.user.helpers.UserGetDto;
-import com.hoodiesbackend.services.user.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
