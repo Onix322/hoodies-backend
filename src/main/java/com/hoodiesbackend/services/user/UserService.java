@@ -37,7 +37,7 @@ public class UserService {
         String password = entity.getPassword();
         String confirmPassword = entity.getConfirmPassword();
 
-        if (password.isBlank() || password.isEmpty()) {
+        if (password.isBlank()) {
             throw new PasswordException("Password or Confirm password id blank. You must fill them!");
         }
         if (!password.equals(confirmPassword)) {
