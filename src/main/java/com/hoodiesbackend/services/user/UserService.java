@@ -38,7 +38,7 @@ public class UserService {
         String confirmPassword = entity.getConfirmPassword();
 
         if (password.isBlank() || password.isEmpty()) {
-            throw new PasswordException("Password of Confirm password id blank. You must fill them!");
+            throw new PasswordException("Password or Confirm password id blank. You must fill them!");
         }
         if (!password.equals(confirmPassword)) {
             throw new PasswordException("Passwords don't match! Try again");
@@ -69,24 +69,6 @@ public class UserService {
 
         return UserMapper.toUserGetDto(user);
     }
-
-//    public UserGetDto login(LogIn body) {
-//
-//        if (!body.isValid()) {
-//            throw new BadRequestException("Email or password wrong!");
-//        }
-//
-//        User user = userRepository.readUserByEmail(body.getEmail())
-//                .orElseThrow(() -> new NotFoundException("This user doesn't exist!"));
-//
-//        if (user.getActivationStatus() == ActivationStatus.ACTIVATED &&
-//                BCrypt.checkpw(body.getPassword(), user.getPassword())) {
-//
-//            return UserMapper.toUserGetDto(user);
-//        }
-//
-//        throw new BadRequestException("User deactivated!");
-//    }
 
     public String login(LogIn body) {
 

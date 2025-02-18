@@ -30,7 +30,7 @@ public class CartService {
     }
 
     public CartDto update(Cart cart) {
-        System.out.println(cart);
+
         return CartMapper.toDto(cartRepository.save(cart));
     }
 
@@ -56,7 +56,6 @@ public class CartService {
 
         return this.update(cart);
     }
-
 
     public List<CartDto> getAll() {
         return cartRepository.findAll()
