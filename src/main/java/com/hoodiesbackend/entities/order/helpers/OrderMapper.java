@@ -3,6 +3,9 @@ package com.hoodiesbackend.entities.order.helpers;
 import com.hoodiesbackend.entities.order.Order;
 import com.hoodiesbackend.entities.product.helpers.ProductDto;
 import com.hoodiesbackend.entities.product.helpers.ProductMapper;
+import com.hoodiesbackend.entities.productCart.ProductCart;
+import com.hoodiesbackend.entities.productCart.helpers.ProductCartDto;
+import com.hoodiesbackend.entities.productCart.helpers.ProductCartMapper;
 import com.hoodiesbackend.entities.user.helpers.UserGetDto;
 import com.hoodiesbackend.entities.user.helpers.UserMapper;
 
@@ -14,9 +17,9 @@ public class OrderMapper {
 
         UserGetDto userDto = UserMapper.toUserGetDto(order.getUser());
 
-        List<ProductDto> productsDto = order.getProducts()
+        List<ProductCartDto> productsDto = order.getProducts()
                 .stream()
-                .map(ProductMapper::toDto)
+                .map(ProductCartMapper::toDto)
                 .toList();
 
         return new OrderDto.OrderBuilder(

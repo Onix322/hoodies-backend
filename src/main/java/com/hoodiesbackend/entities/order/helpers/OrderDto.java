@@ -1,6 +1,8 @@
 package com.hoodiesbackend.entities.order.helpers;
 
 import com.hoodiesbackend.entities.product.helpers.ProductDto;
+import com.hoodiesbackend.entities.productCart.ProductCart;
+import com.hoodiesbackend.entities.productCart.helpers.ProductCartDto;
 import com.hoodiesbackend.entities.user.helpers.UserGetDto;
 
 import java.util.List;
@@ -15,7 +17,7 @@ public class OrderDto {
 
     private UserGetDto user;
 
-    private List<ProductDto> products;
+    private List<ProductCartDto> products;
 
     public OrderDto(OrderBuilder builder) {
         this.id = builder.id;
@@ -57,11 +59,11 @@ public class OrderDto {
         this.user = user;
     }
 
-    public List<ProductDto> getProducts() {
+    public List<ProductCartDto> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductDto> products) {
+    public void setProducts(List<ProductCartDto> products) {
         this.products = products;
     }
 
@@ -74,9 +76,9 @@ public class OrderDto {
 
         private UserGetDto user;
 
-        private List<ProductDto> products;
+        private List<ProductCartDto> products;
 
-        public OrderBuilder(Long id, OrderStatus status, Double totalPrice, UserGetDto user, List<ProductDto> products) {
+        public OrderBuilder(Long id, OrderStatus status, Double totalPrice, UserGetDto user, List<ProductCartDto> products) {
             this.id = id;
             this.status = status;
             this.totalPrice = totalPrice;
@@ -104,7 +106,7 @@ public class OrderDto {
             return this;
         }
 
-        public OrderBuilder setProducts(List<ProductDto> products) {
+        public OrderBuilder setProducts(List<ProductCartDto> products) {
             this.products = products;
             return this;
         }

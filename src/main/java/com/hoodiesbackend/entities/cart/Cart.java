@@ -1,5 +1,6 @@
 package com.hoodiesbackend.entities.cart;
 
+import com.hoodiesbackend.entities.productCart.ProductCart;
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.user.User;
 import jakarta.persistence.*;
@@ -15,26 +16,32 @@ public class Cart {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "users_id", unique = true, nullable = false)
+    @JoinColumn(unique = true, nullable = false)
     private User user;
 
     @OneToMany
-    private List<Product> products;
+    private List<ProductCart> products;
 
-    public List<Product> getProducts() {
+    public List<ProductCart> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<ProductCart> products) {
         this.products = products;
     }
 
-    public void addProduct(Product product) {
+    public void addProduct(ProductCart product) {
         products.add(product);
     }
 
-    public void removeProduct(Product product) {
+    public void removeProduct(ProductCart product) {
         products.remove(product);
+    }
+
+    public void removeProduct(Product product) {
+        products.stream()
+                .filter(cp -> cp.getProduct() == product)
+                .forEach(cp -> products.remove(cp));
     }
 
     public User getUser() {

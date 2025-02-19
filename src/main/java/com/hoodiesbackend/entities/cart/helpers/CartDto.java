@@ -1,6 +1,6 @@
 package com.hoodiesbackend.entities.cart.helpers;
 
-import com.hoodiesbackend.entities.product.helpers.ProductDto;
+import com.hoodiesbackend.entities.productCart.helpers.ProductCartDto;
 import com.hoodiesbackend.entities.user.helpers.UserGetDto;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public class CartDto {
 
     private UserGetDto user;
 
-    private List<ProductDto> products;
+    private List<ProductCartDto> products;
 
     public CartDto(CartDtoBuilder builder) {
         this.id = builder.id;
@@ -35,11 +35,11 @@ public class CartDto {
         this.user = user;
     }
 
-    public List<ProductDto> getProducts() {
+    public List<ProductCartDto> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductDto> products) {
+    public void setProducts(List<ProductCartDto> products) {
         this.products = products;
     }
 
@@ -48,9 +48,9 @@ public class CartDto {
 
         private UserGetDto user;
 
-        private List<ProductDto> products;
+        private List<ProductCartDto> products;
 
-        public CartDtoBuilder(Long id, UserGetDto user, List<ProductDto> products) {
+        public CartDtoBuilder(Long id, UserGetDto user, List<ProductCartDto> products) {
             this.id = id;
             this.user = user;
             this.products = products;
@@ -66,7 +66,7 @@ public class CartDto {
             return this;
         }
 
-        public CartDtoBuilder setProducts(List<ProductDto> products) {
+        public CartDtoBuilder setProducts(List<ProductCartDto> products) {
             this.products = products;
             return this;
         }

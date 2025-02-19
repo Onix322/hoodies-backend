@@ -1,8 +1,8 @@
 package com.hoodiesbackend.entities.cart.helpers;
 
 import com.hoodiesbackend.entities.cart.Cart;
-import com.hoodiesbackend.entities.product.helpers.ProductDto;
-import com.hoodiesbackend.entities.product.helpers.ProductMapper;
+import com.hoodiesbackend.entities.productCart.helpers.ProductCartDto;
+import com.hoodiesbackend.entities.productCart.helpers.ProductCartMapper;
 import com.hoodiesbackend.entities.user.helpers.UserGetDto;
 import com.hoodiesbackend.entities.user.helpers.UserMapper;
 
@@ -10,19 +10,19 @@ import java.util.List;
 
 public class CartMapper {
 
-    public static CartDto toDto(Cart cart){
+    public static CartDto toDto(Cart cart) {
 
         UserGetDto userDto = UserMapper.toUserGetDto(cart.getUser());
 
-        List<ProductDto> productsDto = cart.getProducts()
+        List<ProductCartDto> productCartDtos = cart.getProducts()
                 .stream()
-                .map(ProductMapper::toDto)
+                .map(ProductCartMapper::toDto)
                 .toList();
 
         return new CartDto.CartDtoBuilder(
                 cart.getId(),
                 userDto,
-                productsDto
+                productCartDtos
         ).build();
     }
 }

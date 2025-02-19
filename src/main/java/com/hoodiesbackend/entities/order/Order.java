@@ -2,6 +2,7 @@ package com.hoodiesbackend.entities.order;
 
 import com.hoodiesbackend.entities.order.helpers.OrderStatus;
 import com.hoodiesbackend.entities.product.Product;
+import com.hoodiesbackend.entities.productCart.ProductCart;
 import com.hoodiesbackend.entities.user.User;
 import jakarta.persistence.*;
 
@@ -27,7 +28,7 @@ public class Order {
     private User user;
 
     @ManyToMany
-    private List<Product> products;
+    private List<ProductCart> products;
 
     public Long getId() {
         return id;
@@ -61,11 +62,11 @@ public class Order {
         this.user = user;
     }
 
-    public List<Product> getProducts() {
+    public List<ProductCart> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<ProductCart> products) {
         this.products = products;
     }
 

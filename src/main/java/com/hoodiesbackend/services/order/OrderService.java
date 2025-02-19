@@ -20,30 +20,30 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Order create(Order body){
-        if(body.getProducts().isEmpty()){
+    public Order create(Order body) {
+        if (body.getProducts().isEmpty()) {
             throw new CartException("Cart must not be empty");
         }
 
         return orderRepository.save(body);
     }
 
-    public List<OrderDto> getAll(){
+    public List<OrderDto> getAll() {
         return orderRepository.findAll()
                 .stream()
                 .map(OrderMapper::toDto)
                 .toList();
     }
 
-    public void delete(Long userId, Long orderId){
+    public void delete(Long userId, Long orderId) {
         orderRepository.deleteOrderByUserId(userId, orderId);
     }
 
-    public void deleteAllByUserId(Long userId){
+    public void deleteAllByUserId(Long userId) {
         orderRepository.deleteAllByUserId(userId);
     }
 
-    public OrderDto updateStatus(ChangeOrderStatusObject body){
+    public OrderDto updateStatus(ChangeOrderStatusObject body) {
         Order order = orderRepository.findById(body.getOrderId())
                 .orElseThrow(() -> new NotFoundException("Order not found!"));
 
