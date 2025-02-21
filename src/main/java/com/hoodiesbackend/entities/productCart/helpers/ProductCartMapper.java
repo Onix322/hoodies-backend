@@ -8,6 +8,7 @@ public class ProductCartMapper {
     public static ProductCartDto toDto(ProductCart productCart) {
 
         return new ProductCartDto(
+                productCart.getId(),
                 productCart.getQuantity(),
                 ProductMapper.toDto(productCart.getProduct())
         );

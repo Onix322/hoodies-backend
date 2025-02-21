@@ -19,7 +19,7 @@ public class Cart {
     @JoinColumn(unique = true, nullable = false)
     private User user;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<ProductCart> products;
 
     public List<ProductCart> getProducts() {

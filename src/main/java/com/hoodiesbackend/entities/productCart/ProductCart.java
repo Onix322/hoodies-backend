@@ -1,12 +1,16 @@
 package com.hoodiesbackend.entities.productCart;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hoodiesbackend.entities.cart.Cart;
 import com.hoodiesbackend.entities.product.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import javax.swing.*;
+
 @Entity
-@Table(name = "product_cart")
+@Table(name = "product_cart", uniqueConstraints = @UniqueConstraint(columnNames = {"cart_id", "product_id"}))
 public class ProductCart {
 
     @Id
@@ -17,17 +21,29 @@ public class ProductCart {
     @Min(value = 1)
     private Integer quantity;
 
-    @OneToOne
+    @ManyToOne
     @NotNull
-    @JoinColumn(unique = true)
     private Product product;
 
-    public ProductCart(Product product) {
+    @ManyToOne
+    @JsonIgnore
+    private Cart cart;
+
+    public ProductCart(Product product, Cart cart) {
         this.product = product;
+        this.cart = cart;
     }
 
     public ProductCart() {
 
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Integer getQuantity() {

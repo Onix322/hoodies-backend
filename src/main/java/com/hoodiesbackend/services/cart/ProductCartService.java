@@ -1,4 +1,4 @@
-package com.hoodiesbackend.services;
+package com.hoodiesbackend.services.cart;
 
 import com.hoodiesbackend.entities.productCart.ProductCart;
 import com.hoodiesbackend.repositories.ProductCartRepository;
@@ -28,11 +28,15 @@ public class ProductCartService {
         return productCartRepository.getProductCartByProductId(id);
     }
 
+    public Optional<ProductCart> getByCartId(Long productId, Long cartId) {
+        return productCartRepository.getProductCartByCartId(productId, cartId);
+    }
+
     public List<ProductCart> getAll() {
         return productCartRepository.findAll();
     }
 
-    public void removeByProductId(Long id) {
-        productCartRepository.deleteProductCartByProductId(id);
+    public void removeProductCartById(Long id) {
+        productCartRepository.deleteById(id);
     }
 }

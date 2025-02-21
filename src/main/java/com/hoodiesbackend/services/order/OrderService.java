@@ -24,7 +24,6 @@ public class OrderService {
         if (body.getProducts().isEmpty()) {
             throw new CartException("Cart must not be empty");
         }
-
         return orderRepository.save(body);
     }
 

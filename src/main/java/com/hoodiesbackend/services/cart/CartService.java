@@ -8,7 +8,6 @@ import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.CartRepository;
-import com.hoodiesbackend.services.ProductCartService;
 import com.hoodiesbackend.services.product.ProductService;
 import org.springframework.stereotype.Service;
 
@@ -44,25 +43,27 @@ public class CartService {
         Cart cart = cartRepository.readCartByUserId(userId)
                 .orElseThrow(() -> new NotFoundException("Cart not found!"));
 
-        Optional<ProductCart> productCartOptional = productCartService.getByProductId(productId);
+        Optional<ProductCart> productCartOptional = productCartService.getByCartId(productId, cart.getId());
+
 
         if (productCartOptional.isPresent()) {
             this.increaseQuantity(productCartOptional.get());
             return this.update(cart);
         }
 
-        ProductCart productCart = createProductCart(productId);
+
+        ProductCart productCart = createProductCart(productId, cart);
         cart.addProduct(productCart);
         return this.update(cart);
     }
 
-    private ProductCart createProductCart(Long productId) {
+    private ProductCart createProductCart(Long productId, Cart cart) {
 
         Product product = productService.read(productId);
-        ProductCart productCart = new ProductCart(product);
+        ProductCart productCart = new ProductCart(product, cart);
         productCart.setQuantity(1);
 
-        return productCartService.create(productCart);
+        return productCart;
     }
 
     private void increaseQuantity(ProductCart productCart) {
@@ -71,7 +72,6 @@ public class CartService {
     }
 
     public void decreaseQuantity(ProductCart productCart) {
-
         productCart.setQuantity(productCart.getQuantity() - 1);
         productCartService.update(productCart);
     }
@@ -81,7 +81,7 @@ public class CartService {
         Cart cart = cartRepository.readCartByUserId(userId)
                 .orElseThrow(() -> new NotFoundException("Cart not found!"));
 
-        ProductCart product = productCartService.getByProductId(productId)
+        ProductCart product = productCartService.getByCartId(productId, cart.getId())
                 .orElseThrow(() -> new NotFoundException("Product not found in cart"));
 
         if (product.getQuantity() > 1) {
@@ -92,7 +92,7 @@ public class CartService {
         cart.removeProduct(product);
 
         CartDto cartDto = this.update(cart);
-        productCartService.removeByProductId(productId);
+        productCartService.removeProductCartById(product.getId());
 
         return cartDto;
     }
@@ -131,9 +131,5 @@ public class CartService {
         this.update(cart);
 
         return cart.getProducts().isEmpty();
-    }
-
-    public Boolean verifyExistenceOfProduct(Long userId, Long productId) {
-        return cartRepository.existsProductInCart(userId, productId);
     }
 }

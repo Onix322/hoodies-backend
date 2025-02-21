@@ -34,11 +34,6 @@ public class CartController {
         return ResponseHandler.ok(cartService.readByUserId(id));
     }
 
-    @PutMapping("/exist")
-    public ResponseEntity<Response> userId(@RequestBody CartDataTransfer body) {
-        return ResponseHandler.ok(cartService.verifyExistenceOfProduct(body.getUserId(), body.getProductId()));
-    }
-
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<Response> deleteCart(@PathVariable Long userId) {
         return ResponseHandler.ok(cartService.delete(userId));
