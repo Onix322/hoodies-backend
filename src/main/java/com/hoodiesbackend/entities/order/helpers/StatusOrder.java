@@ -1,9 +1,8 @@
 package com.hoodiesbackend.entities.order.helpers;
 
-public enum OrderStatus {
+public enum StatusOrder {
     CONFIRMED,
-    PREPARING,
-    READY,
-    IN_TRANSIT,
+    PREPARED,
+    IN_TRANSITION,
     DELIVERED
 }

@@ -1,52 +1,63 @@
 package com.hoodiesbackend.services.order;
 
-import com.hoodiesbackend.entities.order.helpers.ChangeOrderStatusObject;
+import com.hoodiesbackend.entities.cart.Cart;
+import com.hoodiesbackend.entities.cart.CartItem.CartItem;
+import com.hoodiesbackend.entities.cart.helpers.CartDto;
 import com.hoodiesbackend.entities.order.Order;
+import com.hoodiesbackend.entities.order.OrderItem.OrderItem;
+import com.hoodiesbackend.entities.order.OrderItem.helpers.OrderItemDto;
+import com.hoodiesbackend.entities.order.OrderItem.helpers.OrderItemMapper;
 import com.hoodiesbackend.entities.order.helpers.OrderDto;
 import com.hoodiesbackend.entities.order.helpers.OrderMapper;
-import com.hoodiesbackend.exceptions.CartException;
-import com.hoodiesbackend.exceptions.NotFoundException;
-import com.hoodiesbackend.repositories.OrderRepository;
+import com.hoodiesbackend.repositories.order.OrderRepository;
+import com.hoodiesbackend.services.cart.CartService;
+import com.hoodiesbackend.services.cart.cartItem.CartItemService;
+import com.hoodiesbackend.services.order.orderItem.OrderItemService;
+import org.springframework.core.CollectionFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderItemService orderItemService;
+    private final CartService cartService;
+    private final CartItemService cartItemService;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, OrderItemService orderItemService, CartService cartService, CartItemService cartItemService) {
         this.orderRepository = orderRepository;
+        this.orderItemService = orderItemService;
+        this.cartService = cartService;
+        this.cartItemService = cartItemService;
     }
 
-    public Order create(Order body) {
-        if (body.getProducts().isEmpty()) {
-            throw new CartException("Cart must not be empty");
-        }
-        return orderRepository.save(body);
-    }
+    public OrderDto create(Cart cart) {
 
-    public List<OrderDto> getAll() {
-        return orderRepository.findAll()
-                .stream()
-                .map(OrderMapper::toDto)
+        List<CartItem> itemsList= cart.getProducts().stream()
+                .map(cartItem -> cartItemService.findItemFroCart(cart.getId(), cartItem.getId()))
                 .toList();
-    }
 
-    public void delete(Long userId, Long orderId) {
-        orderRepository.deleteOrderByUserId(userId, orderId);
-    }
+        cart.setProducts(itemsList);
 
-    public void deleteAllByUserId(Long userId) {
-        orderRepository.deleteAllByUserId(userId);
-    }
+        System.out.println(cart);
 
-    public OrderDto updateStatus(ChangeOrderStatusObject body) {
-        Order order = orderRepository.findById(body.getOrderId())
-                .orElseThrow(() -> new NotFoundException("Order not found!"));
+        Order order = orderRepository.save(OrderMapper.toOrder(cart));
 
-        order.setStatus(body.getStatus());
-        return OrderMapper.toDto(orderRepository.save(order));
+        List<OrderItemDto> orderItems = cart.getProducts()
+                .stream()
+                .map(cartItem -> OrderItemMapper.toOrderItem(cartItem, order))
+                .toList()
+                .stream()
+                .map(orderItemService::create)
+                .map(OrderItemMapper::toDto)
+                .toList();
+
+        OrderDto orderDto = OrderMapper.toDto(orderRepository.save(order));
+        orderDto.setOrderItems(orderItems);
+        return orderDto;
     }
 }

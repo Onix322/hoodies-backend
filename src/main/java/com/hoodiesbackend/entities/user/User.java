@@ -1,12 +1,16 @@
 package com.hoodiesbackend.entities.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hoodiesbackend.entities.cart.Cart;
 import com.hoodiesbackend.entities.user.helpers.ActivationStatus;
 import com.hoodiesbackend.entities.user.helpers.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "users")
+@Data
 public class User {
 
     @Id
@@ -49,77 +53,8 @@ public class User {
     @Column(name = "userImage")
     private String userImage;
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public @NotNull(message = "Activation Status mandatory!") ActivationStatus getActivationStatus() {
-        return activationStatus;
-    }
-
-    public void setActivationStatus(@NotNull(message = "Activation Status mandatory!") ActivationStatus activationStatus) {
-        this.activationStatus = activationStatus;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public @Email String getEmail() {
-        return email;
-    }
-
-    public void setEmail(@Email String email) {
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserImage() {
-        return userImage;
-    }
-
-    public void setUserImage(String userImage) {
-        this.userImage = userImage;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cart cart;
 
     @Override
     public String toString() {

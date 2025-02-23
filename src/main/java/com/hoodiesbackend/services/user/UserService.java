@@ -1,38 +1,37 @@
 package com.hoodiesbackend.services.user;
 
 import com.hoodiesbackend.entities.cart.Cart;
-import com.hoodiesbackend.entities.user.helpers.ActivationStatus;
 import com.hoodiesbackend.entities.user.User;
+import com.hoodiesbackend.entities.user.helpers.ActivationStatus;
+import com.hoodiesbackend.entities.user.helpers.LogIn;
 import com.hoodiesbackend.entities.user.helpers.UserGetDto;
 import com.hoodiesbackend.entities.user.helpers.UserMapper;
-import com.hoodiesbackend.entities.user.helpers.LogIn;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.exceptions.PasswordException;
 import com.hoodiesbackend.repositories.UserRepository;
 import com.hoodiesbackend.services.cart.CartService;
-import com.hoodiesbackend.services.order.OrderService;
 import com.hoodiesbackend.services.token.TokenService;
 import jakarta.transaction.Transactional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    private final CartService cartService;
-    private final OrderService orderService;
     private final TokenService tokenService;
+    private final CartService cartService;
 
-    public UserService(UserRepository userRepository, CartService cartService, OrderService orderService, TokenService tokenService) {
+    public UserService(UserRepository userRepository, TokenService tokenService, CartService cartService) {
         this.userRepository = userRepository;
-        this.cartService = cartService;
-        this.orderService = orderService;
         this.tokenService = tokenService;
+        this.cartService = cartService;
     }
 
-    public User create(User entity) {
+    public UserGetDto create(User entity) {
 
         String password = entity.getPassword();
         String confirmPassword = entity.getConfirmPassword();
@@ -52,11 +51,16 @@ public class UserService {
         entity.setId(null);
         User user = userRepository.save(entity);
 
-        Cart cart = new Cart();
-        cart.setUser(user);
-        cartService.create(cart);
+        Cart cart = Cart.builder()
+                .id(null)
+                .products(new ArrayList<>())
+                .totalPrice(0D)
+                .user(user)
+                .build();
 
-        return user;
+        user.setCart(cartService.create(cart));
+
+        return UserMapper.toUserGetDto(userRepository.save(user));
     }
 
     public UserGetDto read(Long id) {
@@ -105,8 +109,8 @@ public class UserService {
             throw new BadRequestException("Id is invalid!");
         }
 
-        orderService.deleteAllByUserId(id);
-        cartService.delete(id);
+//        orderService.deleteAllByUserId(id);
+//        cartService.delete(id);
         userRepository.deleteById(id);
     }
 

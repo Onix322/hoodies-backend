@@ -1,12 +1,15 @@
 package com.hoodiesbackend.entities.cart;
 
-import com.hoodiesbackend.entities.productCart.ProductCart;
-import com.hoodiesbackend.entities.product.Product;
+import com.hoodiesbackend.entities.cart.CartItem.CartItem;
 import com.hoodiesbackend.entities.user.User;
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
+@Builder
 @Entity
 @Table(name = "cart")
 public class Cart {
@@ -15,57 +18,22 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "total_price")
+    private Double totalPrice;
+
     @OneToOne
-    @JoinColumn(unique = true, nullable = false)
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<ProductCart> products;
+    private List<CartItem> products;
 
-    public List<ProductCart> getProducts() {
-        return products;
+    public Cart() {
     }
 
-    public void setProducts(List<ProductCart> products) {
-        this.products = products;
-    }
-
-    public void addProduct(ProductCart product) {
-        products.add(product);
-    }
-
-    public void removeProduct(ProductCart product) {
-        products.remove(product);
-    }
-
-    public void removeProduct(Product product) {
-        products.stream()
-                .filter(cp -> cp.getProduct() == product)
-                .forEach(cp -> products.remove(cp));
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public Cart(Long id, Double totalPrice, User user, List<CartItem> products) {
         this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "id=" + id +
-                ", user=" + user +
-                ", products=" + products +
-                '}';
+        this.totalPrice = totalPrice;
+        this.user = user;
+        this.products = products;
     }
 }
