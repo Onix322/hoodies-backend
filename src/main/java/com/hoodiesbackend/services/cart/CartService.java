@@ -12,6 +12,7 @@ import com.hoodiesbackend.services.product.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartService {
@@ -35,15 +36,25 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public Boolean addProduct(CartItem body){
-        Cart cart = this.getCartById(body.getCart().getId());
-        Product product = productService.read(body.getProduct().getId());
+    public Boolean addProduct(CartItem cartItemBody){
+        Cart cart = this.getCartById(cartItemBody.getCart().getId());
+        Product product = productService.read(cartItemBody.getProduct().getId());
 
-        cart.setTotalPrice(cart.getTotalPrice() + (product.getPrice() * body.getQuantity()));
+        if(cartItemService.contains(cart.getId(), cartItemBody.getProduct().getId())){
 
+            System.out.println("Id pentru bpdy " + cartItemBody.getProduct().getId() + " " + cart.getId());
+
+            CartItem cartItem = cartItemService.findItem(cart.getId(), cartItemBody.getProduct().getId());
+
+            cartItem.setQuantity(cartItem.getQuantity() + 1);
+
+            cartItemService.update(cartItem);
+        } else {
+            cartItemService.create(cartItemBody);
+        }
+
+        cart.setTotalPrice(cart.getTotalPrice() + (product.getPrice() * cartItemBody.getQuantity()));
         this.update(cart);
-        CartItem cartItem = cartItemService.create(body);
-        System.out.println(cartItem);
 
         return true;
     }
@@ -60,6 +71,17 @@ public class CartService {
     }
 
     public Boolean deleteItem(Long cartId, Long itemId){
-        return cartItemService.delete(cartId, itemId);
+
+        CartItem cartItem = cartItemService.findItemForCart(cartId, itemId);
+        Cart cart = this.getCartById(cartId);
+
+        if(cartItem.getQuantity() > 1){
+            cartItem.setQuantity(cartItem.getQuantity() - 1);
+            cart.setTotalPrice(cart.getTotalPrice() - cartItem.getProduct().getPrice());
+            this.update(cart);
+            return true;
+        } else {
+            return cartItemService.delete(cartId, itemId);
+        }
     }
 }

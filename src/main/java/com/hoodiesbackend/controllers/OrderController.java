@@ -5,10 +5,7 @@ import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;
 import com.hoodiesbackend.services.order.OrderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/order")
@@ -23,5 +20,10 @@ public class OrderController {
     @PostMapping("/post")
     public ResponseEntity<Response> create(@RequestBody Cart cart) {
         return ResponseHandler.ok(orderService.create(cart));
+    }
+
+    @DeleteMapping("/remove/{orderId}")
+    public ResponseEntity<Response> create(@PathVariable Long orderId) {
+        return ResponseHandler.ok(" WORK IN PROGRESS " + orderId);
     }
 }

@@ -16,6 +16,11 @@ public class CartItemService {
     }
 
     public CartItem create(CartItem body){
+        body.setId(null);
+        return cartItemRepository.save(body);
+    }
+
+    public CartItem update(CartItem body){
         return cartItemRepository.save(body);
     }
 
@@ -23,14 +28,21 @@ public class CartItemService {
         return cartItemRepository.findAllByCartId(cartId);
     }
 
-    public CartItem findItemFroCart(Long cartId, Long itemId){
+    public CartItem findItemForCart(Long cartId, Long itemId){
         return cartItemRepository.findCartItemByCartIdAndId(cartId, itemId)
                 .orElseThrow(() -> new NotFoundException("Item not found in cart!"));
     }
 
-    public boolean delete(Long cartId, Long itemId){
+    public CartItem findItem(Long cartId, Long productId){
+        return cartItemRepository.findCartItemByCartIdAndProductId(cartId, productId)
+                .orElseThrow(() -> new NotFoundException("Item not found in cart!"));
+    }
 
-        Integer integerStatus = cartItemRepository.deleteCartItemByCartIdAndId(cartId, itemId);
-        return integerStatus > 0;
+    public boolean delete(Long cartId, Long itemId){
+        return cartItemRepository.deleteCartItemByCartIdAndId(cartId, itemId) > 0;
+    }
+
+    public Boolean contains(Long cartId, Long productId){
+        return cartItemRepository.existsCartItemByCartIdAndProductId(cartId, productId);
     }
 }

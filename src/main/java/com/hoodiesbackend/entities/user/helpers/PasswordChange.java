@@ -1,5 +1,8 @@
 package com.hoodiesbackend.entities.user.helpers;
 
+import lombok.Data;
+
+@Data
 public class PasswordChange {
     Long userId;
     String oldPassword;
@@ -10,38 +13,6 @@ public class PasswordChange {
         this.userId = userId;
         this.oldPassword = oldPassword;
         this.newPassword = newPassword;
-        this.confirmNewPassword = confirmNewPassword;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getOldPassword() {
-        return oldPassword;
-    }
-
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
-
-    public String getConfirmNewPassword() {
-        return confirmNewPassword;
-    }
-
-    public void setConfirmNewPassword(String confirmNewPassword) {
         this.confirmNewPassword = confirmNewPassword;
     }
 }
