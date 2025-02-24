@@ -7,9 +7,12 @@ import com.hoodiesbackend.entities.order.OrderItem.helpers.OrderItemDto;
 import com.hoodiesbackend.entities.order.OrderItem.helpers.OrderItemMapper;
 import com.hoodiesbackend.entities.order.helpers.OrderDto;
 import com.hoodiesbackend.entities.order.helpers.OrderMapper;
+import com.hoodiesbackend.entities.order.helpers.StatusOrder;
+import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.order.OrderRepository;
 import com.hoodiesbackend.services.cart.cartItem.CartItemService;
 import com.hoodiesbackend.services.order.orderItem.OrderItemService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,5 +55,31 @@ public class OrderService {
         OrderDto orderDto = OrderMapper.toDto(orderRepository.save(order));
         orderDto.setOrderItems(orderItems);
         return orderDto;
+    }
+
+    public List<OrderDto> getAll() {
+        return orderRepository.findAll().stream()
+                .peek(order -> order.setOrderItems(orderItemService.findByOrderId(order.getId())))
+                .map(OrderMapper::toDto)
+                .toList();
+    }
+
+    public List<OrderDto> getFor(Long userId) {
+        return orderRepository.findAllByUserId(userId).stream()
+                .peek(order -> order.setOrderItems(orderItemService.findByOrderId(order.getId())))
+                .map(OrderMapper::toDto)
+                .toList();
+    }
+
+    @Transactional
+    public OrderDto delete(Long orderId){
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new NotFoundException("Order not found!"));
+
+        order.setStatusOrder(StatusOrder.CANCELED);
+
+        orderRepository.save(order);
+
+        return OrderMapper.toDto(order);
     }
 }

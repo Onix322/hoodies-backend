@@ -4,6 +4,8 @@ import com.hoodiesbackend.entities.order.OrderItem.OrderItem;
 import com.hoodiesbackend.repositories.order.OrderItemRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderItemService {
 
@@ -15,5 +17,9 @@ public class OrderItemService {
 
     public OrderItem create(OrderItem cartItem) {
         return orderItemRepository.save(cartItem);
+    }
+
+    public List<OrderItem> findByOrderId(Long orderId) {
+        return orderItemRepository.findAllByOrderId(orderId);
     }
 }

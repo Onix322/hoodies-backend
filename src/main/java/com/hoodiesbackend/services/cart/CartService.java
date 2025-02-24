@@ -12,7 +12,6 @@ import com.hoodiesbackend.services.product.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartService {
@@ -27,20 +26,20 @@ public class CartService {
         this.cartItemService = cartItemService;
     }
 
-    public Cart create(Cart body){
+    public Cart create(Cart body) {
         body.setId(null);
         return cartRepository.save(body);
     }
 
-    public Cart update(Cart cart){
+    public Cart update(Cart cart) {
         return cartRepository.save(cart);
     }
 
-    public Boolean addProduct(CartItem cartItemBody){
+    public Boolean addProduct(CartItem cartItemBody) {
         Cart cart = this.getCartById(cartItemBody.getCart().getId());
         Product product = productService.read(cartItemBody.getProduct().getId());
 
-        if(cartItemService.contains(cart.getId(), cartItemBody.getProduct().getId())){
+        if (cartItemService.contains(cart.getId(), cartItemBody.getProduct().getId())) {
 
             System.out.println("Id pentru bpdy " + cartItemBody.getProduct().getId() + " " + cart.getId());
 
@@ -59,23 +58,23 @@ public class CartService {
         return true;
     }
 
-    public CartDto getCartByUserId(Long userId){
+    public CartDto getCartByUserId(Long userId) {
         Cart cart = cartRepository.findCartByUserId(userId);
         List<CartItem> items = cartItemService.findAllByCartId(cart.getId());
         cart.setProducts(items);
         return CartMapper.toDto(cart);
     }
 
-    public Cart getCartById(Long cartId){
+    public Cart getCartById(Long cartId) {
         return cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("Cart not found"));
     }
 
-    public Boolean deleteItem(Long cartId, Long itemId){
+    public Boolean deleteItem(Long cartId, Long itemId) {
 
         CartItem cartItem = cartItemService.findItemForCart(cartId, itemId);
         Cart cart = this.getCartById(cartId);
 
-        if(cartItem.getQuantity() > 1){
+        if (cartItem.getQuantity() > 1) {
             cartItem.setQuantity(cartItem.getQuantity() - 1);
             cart.setTotalPrice(cart.getTotalPrice() - cartItem.getProduct().getPrice());
             this.update(cart);

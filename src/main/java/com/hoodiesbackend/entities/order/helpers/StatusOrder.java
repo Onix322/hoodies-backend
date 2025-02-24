@@ -4,5 +4,6 @@ public enum StatusOrder {
     CONFIRMED,
     PREPARED,
     IN_TRANSITION,
-    DELIVERED
+    DELIVERED,
+    CANCELED
 }
