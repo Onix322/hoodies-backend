@@ -15,8 +15,8 @@ public class LogIn {
     public Boolean isValid(){
 
         System.out.println(this);
-        return !(email.isBlank() || email.isEmpty()) &&
-                !(password.isBlank() || password.isEmpty());
+        return !(email.isBlank() || email.isEmpty())  &&
+                !(password.isBlank() || password.isEmpty() );
     }
 
     @Override
