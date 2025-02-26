@@ -1,6 +1,8 @@
 package com.hoodiesbackend.entities.user;
 
 import com.hoodiesbackend.entities.cart.Cart;
+import com.hoodiesbackend.entities.order.Order;
+import com.hoodiesbackend.entities.user.address.Address;
 import com.hoodiesbackend.entities.user.helpers.ActivationStatus;
 import com.hoodiesbackend.entities.user.helpers.Role;
 import jakarta.persistence.*;
@@ -9,6 +11,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -57,6 +61,12 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Cart cart;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Address> addresses;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Order> orders;
 
     @Override
     public String toString() {

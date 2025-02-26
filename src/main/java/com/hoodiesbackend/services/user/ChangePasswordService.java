@@ -5,7 +5,7 @@ import com.hoodiesbackend.entities.user.User;
 import com.hoodiesbackend.exceptions.MatchingPasswords;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.exceptions.PasswordException;
-import com.hoodiesbackend.repositories.UserRepository;
+import com.hoodiesbackend.repositories.user.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 

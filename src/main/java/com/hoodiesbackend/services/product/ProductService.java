@@ -5,7 +5,7 @@ import com.hoodiesbackend.entities.product.helpers.ProductDto;
 import com.hoodiesbackend.entities.product.helpers.ProductMapper;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
-import com.hoodiesbackend.repositories.ProductRepository;
+import com.hoodiesbackend.repositories.product.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

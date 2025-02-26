@@ -1,9 +1,9 @@
-package com.hoodiesbackend.controllers;
+package com.hoodiesbackend.controllers.user;
 
 import com.hoodiesbackend.entities.user.helpers.UserGetDto;
 import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;
-import com.hoodiesbackend.services.token.TokenService;
+import com.hoodiesbackend.services.user.token.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

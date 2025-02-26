@@ -1,4 +1,4 @@
-package com.hoodiesbackend.controllers;
+package com.hoodiesbackend.controllers.user;
 
 import com.hoodiesbackend.entities.user.helpers.PasswordChange;
 import com.hoodiesbackend.response.Response;

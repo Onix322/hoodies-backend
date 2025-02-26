@@ -1,4 +1,4 @@
-package com.hoodiesbackend.repositories;
+package com.hoodiesbackend.repositories.product;
 
 import com.hoodiesbackend.entities.product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;

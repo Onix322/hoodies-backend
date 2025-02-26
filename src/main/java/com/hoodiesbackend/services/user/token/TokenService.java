@@ -1,4 +1,4 @@
-package com.hoodiesbackend.services.token;
+package com.hoodiesbackend.services.user.token;
 
 import com.hoodiesbackend.entities.user.helpers.UserGetDto;
 import io.jsonwebtoken.Claims;

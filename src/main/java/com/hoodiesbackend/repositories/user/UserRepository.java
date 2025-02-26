@@ -1,4 +1,4 @@
-package com.hoodiesbackend.repositories;
+package com.hoodiesbackend.repositories.user;
 
 import com.hoodiesbackend.entities.user.helpers.ActivationStatus;
 import com.hoodiesbackend.entities.user.User;
