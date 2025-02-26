@@ -2,6 +2,7 @@ package com.hoodiesbackend.services.user;
 
 import com.hoodiesbackend.entities.user.helpers.PasswordChange;
 import com.hoodiesbackend.entities.user.User;
+import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.MatchingPasswords;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.exceptions.PasswordException;
@@ -19,6 +20,8 @@ public class ChangePasswordService {
     }
 
     public Boolean change(PasswordChange body) {
+
+        if(body.getUserId() < 1) throw new BadRequestException("User id should be > 0");
 
         User user = userRepository.findById(body.getUserId())
                 .orElseThrow(() -> new NotFoundException("User not found"));

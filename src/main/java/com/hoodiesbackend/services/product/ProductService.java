@@ -42,6 +42,7 @@ public class ProductService {
     }
 
     public List<ProductDto> readAmount(Integer amount, Integer startFrom) {
+        if(amount < 1 || startFrom < 1) throw new BadRequestException("Amount and StartFrom should be > 0");
 
         return productRepository.getAmountOfProducts(amount, startFrom)
                 .stream()

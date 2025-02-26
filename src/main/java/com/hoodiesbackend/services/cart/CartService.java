@@ -5,6 +5,7 @@ import com.hoodiesbackend.entities.cart.CartItem.CartItem;
 import com.hoodiesbackend.entities.cart.helpers.CartDto;
 import com.hoodiesbackend.entities.cart.helpers.CartMapper;
 import com.hoodiesbackend.entities.product.Product;
+import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.cart.CartRepository;
 import com.hoodiesbackend.services.cart.cartItem.CartItemService;
@@ -59,6 +60,8 @@ public class CartService {
     }
 
     public CartDto getCartByUserId(Long userId) {
+        if(userId < 1) throw new BadRequestException("User id should be > 0");
+
         Cart cart = cartRepository.findCartByUserId(userId);
         List<CartItem> items = cartItemService.findAllByCartId(cart.getId());
         cart.setProducts(items);
@@ -66,10 +69,15 @@ public class CartService {
     }
 
     public Cart getCartById(Long cartId) {
+
+        if(cartId < 1) throw new BadRequestException("Cart Id should be > 0");
+
         return cartRepository.findById(cartId).orElseThrow(() -> new NotFoundException("Cart not found"));
     }
 
     public Boolean deleteItem(Long cartId, Long itemId) {
+
+        if(cartId < 1 || itemId < 1) throw new BadRequestException("Cart Id and Item id should be > 0");
 
         CartItem cartItem = cartItemService.findItemForCart(cartId, itemId);
         Cart cart = this.getCartById(cartId);

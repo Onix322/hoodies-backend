@@ -1,6 +1,7 @@
 package com.hoodiesbackend.services.order.orderItem;
 
 import com.hoodiesbackend.entities.order.OrderItem.OrderItem;
+import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.repositories.order.OrderItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class OrderItemService {
     }
 
     public List<OrderItem> findByOrderId(Long orderId) {
+        if(orderId < 1) throw new BadRequestException("Order id should be > 0");
         return orderItemRepository.findAllByOrderId(orderId);
     }
 }

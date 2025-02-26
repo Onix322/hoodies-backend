@@ -3,6 +3,7 @@ package com.hoodiesbackend.services.user.address;
 import com.hoodiesbackend.entities.user.address.Address;
 import com.hoodiesbackend.entities.user.address.helpers.AddressDto;
 import com.hoodiesbackend.entities.user.address.helpers.AddressMapper;
+import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.repositories.user.AddressRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,8 @@ public class AddressService {
     }
 
     public List<AddressDto> getAllFor(Long userId){
+        if(userId < 1) throw new BadRequestException("User id should be > 0");
+
         return addressRepository.findAddressByUserId(userId)
                 .stream()
                 .map(AddressMapper::toDto)

@@ -109,8 +109,6 @@ public class UserService {
             throw new BadRequestException("Id is invalid!");
         }
 
-//        orderService.deleteAllByUserId(id);
-//        cartService.delete(id);
         userRepository.deleteById(id);
     }
 

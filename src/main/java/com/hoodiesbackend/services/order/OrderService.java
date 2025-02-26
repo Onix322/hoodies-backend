@@ -11,15 +11,14 @@ import com.hoodiesbackend.entities.order.helpers.OrderDto;
 import com.hoodiesbackend.entities.order.helpers.OrderMapper;
 import com.hoodiesbackend.entities.order.helpers.StatusOrder;
 import com.hoodiesbackend.entities.user.address.Address;
+import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.order.OrderRepository;
 import com.hoodiesbackend.services.cart.cartItem.CartItemService;
 import com.hoodiesbackend.services.order.orderItem.OrderItemService;
-import com.hoodiesbackend.services.user.address.AddressService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,16 +27,14 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemService orderItemService;
     private final CartItemService cartItemService;
-    private final AddressService addressService;
 
     public OrderService(
             OrderRepository orderRepository,
             OrderItemService orderItemService,
-            CartItemService cartItemService, AddressService addressService) {
+            CartItemService cartItemService) {
         this.orderRepository = orderRepository;
         this.orderItemService = orderItemService;
         this.cartItemService = cartItemService;
-        this.addressService = addressService;
     }
 
     public OrderDto create(OrderDetails orderDetails) {
@@ -76,6 +73,9 @@ public class OrderService {
     }
 
     public List<OrderDto> getFor(Long userId) {
+
+        if (userId < 1) throw new BadRequestException("User id should be > 0");
+
         return orderRepository.findAllByUserId(userId).stream()
                 .peek(order -> order.setOrderItems(orderItemService.findByOrderId(order.getId())))
                 .map(OrderMapper::toDto)
@@ -83,6 +83,9 @@ public class OrderService {
     }
 
     public OrderDto getOneFor(Long userId, Long orderId) {
+
+        if (userId < 1 || orderId < 1) throw new BadRequestException("User id or order id should be > 0");
+
         Order order = orderRepository.findOrderByUserIdAndId(userId, orderId)
                 .orElseThrow(() -> new NotFoundException("Order not found!"));
 
@@ -94,7 +97,10 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderDto delete(Long orderId){
+    public OrderDto delete(Long orderId) {
+
+        if (orderId < 1) throw new BadRequestException("Order id should be > 0");
+
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NotFoundException("Order not found!"));
 
