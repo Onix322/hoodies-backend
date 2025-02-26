@@ -6,10 +6,7 @@ import com.hoodiesbackend.entities.order.Order;
 import com.hoodiesbackend.entities.order.OrderItem.OrderItem;
 import com.hoodiesbackend.entities.order.OrderItem.helpers.OrderItemDto;
 import com.hoodiesbackend.entities.order.OrderItem.helpers.OrderItemMapper;
-import com.hoodiesbackend.entities.order.helpers.OrderDetails;
-import com.hoodiesbackend.entities.order.helpers.OrderDto;
-import com.hoodiesbackend.entities.order.helpers.OrderMapper;
-import com.hoodiesbackend.entities.order.helpers.StatusOrder;
+import com.hoodiesbackend.entities.order.helpers.*;
 import com.hoodiesbackend.entities.user.address.Address;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
@@ -17,6 +14,7 @@ import com.hoodiesbackend.repositories.order.OrderRepository;
 import com.hoodiesbackend.services.cart.cartItem.CartItemService;
 import com.hoodiesbackend.services.order.orderItem.OrderItemService;
 import jakarta.transaction.Transactional;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,6 +70,12 @@ public class OrderService {
                 .toList();
     }
 
+    public OrderDto update(Order order) {
+        if (order.getId() < 1) throw new BadRequestException("Order should be > 1!");
+
+        return OrderMapper.toDto(orderRepository.save(order));
+    }
+
     public List<OrderDto> getFor(Long userId) {
 
         if (userId < 1) throw new BadRequestException("User id should be > 0");
@@ -106,8 +110,22 @@ public class OrderService {
 
         order.setStatusOrder(StatusOrder.CANCELED);
 
-        orderRepository.save(order);
+        this.update(order);
 
         return OrderMapper.toDto(order);
+    }
+
+    public OrderDto changeStatus(@NonNull ChangeStatusOrder changeStatusOrder) {
+
+        if (changeStatusOrder.getOrderId() < 1 || changeStatusOrder.getStatusOrder() == null) {
+            throw new BadRequestException("Order id should not be 0, respective null");
+        }
+
+        Order order = orderRepository.findById(changeStatusOrder.getOrderId())
+                .orElseThrow(() -> new NotFoundException("Order not found!"));
+
+        order.setStatusOrder(changeStatusOrder.getStatusOrder());
+
+        return this.update(order);
     }
 }

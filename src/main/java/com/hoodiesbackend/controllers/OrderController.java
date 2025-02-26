@@ -1,5 +1,6 @@
 package com.hoodiesbackend.controllers;
 
+import com.hoodiesbackend.entities.order.helpers.ChangeStatusOrder;
 import com.hoodiesbackend.entities.order.helpers.OrderDetails;
 import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;
@@ -38,7 +39,12 @@ public class OrderController {
     }
 
     @GetMapping("/get/{userId}/{orderId}")
-    public ResponseEntity<Response> getForUser(@PathVariable Long userId, @PathVariable Long orderId) {
+    public ResponseEntity<Response> getOneForUser(@PathVariable Long userId, @PathVariable Long orderId) {
         return ResponseHandler.ok(orderService.getOneFor(userId, orderId));
+    }
+
+    @PutMapping("/status")
+    public ResponseEntity<Response> changeStatus(@RequestBody ChangeStatusOrder body) {
+        return ResponseHandler.ok(orderService.changeStatus(body));
     }
 }
