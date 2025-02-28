@@ -1,4 +1,4 @@
-package com.hoodiesbackend.controllers;
+package com.hoodiesbackend.controllers.product;
 
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.product.helpers.ProductDto;

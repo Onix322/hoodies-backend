@@ -2,11 +2,13 @@ package com.hoodiesbackend.entities.product;
 
 import com.hoodiesbackend.entities.product.helpers.ProductColor;
 import com.hoodiesbackend.entities.product.helpers.ProductImage;
+import com.hoodiesbackend.entities.product.review.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.hoodiesbackend.entities.product.helpers.Size;
 
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class Product {
 
     @Column(name = "size", nullable = false)
     @Enumerated(EnumType.STRING)
-    private com.hoodiesbackend.entities.product.helpers.Size size;
+    private Size size;
 
     @Column(name = "rating", nullable = false)
     @Min(value = 0, message = "Rating should be between 0-5")
@@ -51,18 +53,14 @@ public class Product {
     @NotEmpty(message = "Must contain at least 1 image link")
     private List<ProductImage> productImages;
 
-    @Override
-    public String toString() {
+    @Column(name = "available_for_purchase", nullable = false)
+    @NotNull(message = "availableForPurchase is mandatory!")
+    private Boolean availableForPurchase;
 
-        return "Product{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", size=" + size +
-                ", rating=" + rating +
-                ", description='" + description + '\'' +
-                ", productColor=" + productColor +
-                ", price=" + price +
-                ", productImages=" + productImages +
-                '}';
-    }
+    @Column(name = "number_reviews", nullable = false)
+    @NotNull(message = "NumberReviews cannot be null!")
+    private Integer numberReviews;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 }
