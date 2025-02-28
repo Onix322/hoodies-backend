@@ -1,6 +1,5 @@
 package com.hoodiesbackend.entities.product.helpers;
 
-
 public class ProductDto {
     private Long id;
     private String title;
@@ -8,6 +7,8 @@ public class ProductDto {
     private Size size;
     private Double price;
     private ProductImage productImage;
+    private Integer numberReviews;
+    private Boolean availableForPurchase;
 
     private ProductDto(Builder builder) {
         this.id = builder.id;
@@ -16,6 +17,8 @@ public class ProductDto {
         this.price = builder.price;
         this.size = builder.size;
         this.productImage = builder.productImage;
+        this.availableForPurchase = builder.availableForPurchase;
+        this.numberReviews = builder.numberReviews;
     }
 
     public Double getPrice() {
@@ -66,6 +69,22 @@ public class ProductDto {
         this.productImage = productImage;
     }
 
+    public Integer getNumberReviews() {
+        return numberReviews;
+    }
+
+    public void setNumberReviews(Integer numberReviews) {
+        this.numberReviews = numberReviews;
+    }
+
+    public Boolean getAvailableForPurchase() {
+        return availableForPurchase;
+    }
+
+    public void setAvailableForPurchase(Boolean availableForPurchase) {
+        this.availableForPurchase = availableForPurchase;
+    }
+
     static class Builder{
         private Long id = 0L;
         private String title = "";
@@ -73,8 +92,20 @@ public class ProductDto {
         private Size size = Size.S;
         private Double price = 0.0;
         private ProductImage productImage = new ProductImage();
+        private Integer numberReviews = 0;
+        private Boolean availableForPurchase = true;
 
         public Builder() {}
+
+        public Builder setNumberReviews(Integer numberReviews) {
+            this.numberReviews = numberReviews;
+            return this;
+        }
+
+        public Builder setAvailableForPurchase(Boolean availableForPurchase) {
+            this.availableForPurchase = availableForPurchase;
+            return this;
+        }
 
         public Builder setId(Long id) {
             this.id = id;
