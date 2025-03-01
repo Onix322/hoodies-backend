@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/change-password")
-@CrossOrigin("http://localhost:4200/")
 public class PasswordChangeController {
 
     private final ChangePasswordService changePasswordService;

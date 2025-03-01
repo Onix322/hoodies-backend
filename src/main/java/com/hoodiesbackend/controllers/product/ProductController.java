@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/products")
-@CrossOrigin("http://localhost:4200/")
 public class ProductController {
 
     private final ProductService productService;
@@ -63,8 +62,8 @@ public class ProductController {
         return ResponseHandler.ok(productService.delete(id));
     }
 
-    @DeleteMapping("/{id}/availability/{status}")
-    public ResponseEntity<Response> availability(@PathVariable Long id, @PathVariable Boolean status) {
-        return ResponseHandler.ok(productService.changeAvailability(id, status));
+    @DeleteMapping("/{productId}/availability/{status}")
+    public ResponseEntity<Response> availability(@PathVariable Long productId, @PathVariable Boolean status) {
+        return ResponseHandler.ok(productService.changeAvailability(productId, status));
     }
 }

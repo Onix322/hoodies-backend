@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/token")
-@CrossOrigin("http://localhost:4200/")
 public class TokenController {
 
     private final TokenService tokenService;
