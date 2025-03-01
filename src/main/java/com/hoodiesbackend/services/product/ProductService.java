@@ -54,12 +54,21 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Product delete(Long id) {
-        Product product = this.read(id);
+    public ProductDto delete(Long id) {
+
         if (id <= 0) {
             throw new BadRequestException("Id is invalid!");
         }
-        productRepository.deleteById(product.getId());
-        return product;
+        Product product = this.read(id);
+//        productRepository.deleteById(product.getId());
+        product.setAvailableForPurchase(false);
+        return ProductMapper.toDto(this.update(product));
+    }
+
+    public ProductDto changeAvailability(Long productId, Boolean status){
+        Product product = this.read(productId);
+        product.setAvailableForPurchase(status);
+
+        return ProductMapper.toDto(this.update(product));
     }
 }

@@ -2,6 +2,8 @@ package com.hoodiesbackend.services.product.review;
 
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.product.review.Review;
+import com.hoodiesbackend.entities.product.review.helpers.ReviewDto;
+import com.hoodiesbackend.entities.product.review.helpers.ReviewMapper;
 import com.hoodiesbackend.repositories.product.ReviewRepository;
 import com.hoodiesbackend.services.product.ProductService;
 import com.hoodiesbackend.services.product.review.helpers.AverageReviews;
@@ -20,7 +22,7 @@ public class ReviewService {
         this.productService = productService;
     }
 
-    public Review create(Review review) {
+    public ReviewDto create(Review review) {
 
         Product product = productService.read(review.getProduct().getId());
         product.setNumberReviews(product.getNumberReviews() + 1);
@@ -30,10 +32,13 @@ public class ReviewService {
         product.setRating(AverageReviews.calculateAverageForAllReviews(product, reviewRepository));
 
         productService.update(product);
-        return reviewSaved;
+        return ReviewMapper.toDto(reviewSaved);
     }
 
-    public List<Review> getAll() {
-        return reviewRepository.findAll();
+    public List<ReviewDto> getAll() {
+        return reviewRepository.findAll()
+                .stream()
+                .map(ReviewMapper::toDto)
+                .toList();
     }
 }

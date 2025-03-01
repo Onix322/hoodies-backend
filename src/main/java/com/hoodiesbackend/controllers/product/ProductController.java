@@ -62,4 +62,9 @@ public class ProductController {
     public ResponseEntity<Response> delete(@PathVariable Long id) {
         return ResponseHandler.ok(productService.delete(id));
     }
+
+    @DeleteMapping("/{id}/availability/{status}")
+    public ResponseEntity<Response> availability(@PathVariable Long id, @PathVariable Boolean status) {
+        return ResponseHandler.ok(productService.changeAvailability(id, status));
+    }
 }
