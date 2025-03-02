@@ -84,11 +84,21 @@ public class CartService {
 
         if (cartItem.getQuantity() > 1) {
             cartItem.setQuantity(cartItem.getQuantity() - 1);
-            cart.setTotalPrice(cart.getTotalPrice() - cartItem.getProduct().getPrice());
-            this.update(cart);
-            return true;
         } else {
-            return cartItemService.delete(cartId, itemId);
+            cartItemService.delete(cartId, itemId);
         }
+
+        cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getProduct().getPrice()));
+        this.update(cart);
+        return true;
+    }
+
+    public Integer getCartLengthByUserId(Long userId) {
+        return cartItemService.findAllByCartId(this.cartRepository.findCartByUserId(userId).getId())
+                .size();
+    }
+    public Integer getCartLength(Long cartId){
+        return cartItemService.findAllByCartId(cartId)
+                .size();
     }
 }

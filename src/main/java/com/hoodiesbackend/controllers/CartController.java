@@ -33,6 +33,16 @@ public class CartController {
         return ResponseHandler.ok(cartService.getCartByUserId(userId));
     }
 
+    @GetMapping("get/by-cartid/{cartId}")
+    public ResponseEntity<Response> getCartLengthByUserId(@PathVariable Long cartId){
+        return ResponseHandler.ok(cartService.getCartLengthByUserId(cartId));
+    }
+
+    @GetMapping("get-length/by-userid/{userId}")
+    public ResponseEntity<Response> getCartLengthByCartId(@PathVariable Long userId){
+        return ResponseHandler.ok(cartService.getCartLength(userId));
+    }
+
     @DeleteMapping("delete/item/{cartId}/{itemId}")
     public ResponseEntity<Response> deleteItem(@PathVariable Long cartId, @PathVariable Long itemId){
         return ResponseHandler.ok(cartService.deleteItem(cartId, itemId));
