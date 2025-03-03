@@ -4,6 +4,7 @@ import com.hoodiesbackend.entities.user.address.Address;
 import com.hoodiesbackend.entities.user.address.helpers.AddressDto;
 import com.hoodiesbackend.entities.user.address.helpers.AddressMapper;
 import com.hoodiesbackend.exceptions.BadRequestException;
+import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.user.AddressRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class AddressService {
     }
 
     public AddressDto update(Address body){
+        System.out.println(body);
         return AddressMapper.toDto(addressRepository.save(body));
     }
 
@@ -31,6 +33,7 @@ public class AddressService {
 
         return addressRepository.findAddressByUserId(userId)
                 .stream()
+                .filter(Address::getActiveAddress)
                 .map(AddressMapper::toDto)
                 .toList();
     }
@@ -40,5 +43,26 @@ public class AddressService {
                 .stream()
                 .map(AddressMapper::toDto)
                 .toList();
+    }
+
+    public AddressDto getAddress(Long addressId){
+        if(addressId < 1) throw new BadRequestException("User id should be > 0");
+
+        return AddressMapper.toDto(
+                addressRepository.findById(addressId)
+                        .orElseThrow(() -> new NotFoundException("Address not found!"))
+        );
+    }
+
+    public AddressDto deleteAddress(Long addressId){
+        if(addressId < 1) throw new BadRequestException("User id should be > 0");
+
+        Address address = addressRepository.findById(addressId)
+                .orElseThrow(() -> new NotFoundException("Address not found!"));
+
+        address.setActiveAddress(false);
+        this.update(address);
+
+        return AddressMapper.toDto(address);
     }
 }

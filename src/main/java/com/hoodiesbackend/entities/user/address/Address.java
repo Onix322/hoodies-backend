@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "address")
@@ -45,4 +46,14 @@ public class Address {
     @Column(name = "zip", nullable = false)
     @NotNull(message = "Zipcode mandatory!")
     private String zip;
+
+    @Column(name = "active_address", nullable = false)
+    @ColumnDefault(value = "true")
+    @NotNull(message = "ActiveAddress mandatory!")
+    private Boolean activeAddress;
+
+    @Column(name = "main_address", nullable = false)
+    @ColumnDefault(value = "false")
+    @NotNull(message = "MainAddress mandatory!")
+    private Boolean mainAddress;
 }

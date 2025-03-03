@@ -22,13 +22,28 @@ public class AddressController {
         return ResponseHandler.ok(this.addressService.create(body));
     }
 
+    @PutMapping("/put")
+    public ResponseEntity<Response> update(@RequestBody Address body){
+        return ResponseHandler.ok(this.addressService.update(body));
+    }
+
     @GetMapping("/get/{userId}")
     public ResponseEntity<Response> getAllFor(@PathVariable Long userId){
         return ResponseHandler.ok(this.addressService.getAllFor(userId));
     }
 
+    @GetMapping("/get-address/{addressId}")
+    public ResponseEntity<Response> getAddress(@PathVariable Long addressId){
+        return ResponseHandler.ok(this.addressService.getAddress(addressId));
+    }
+
     @GetMapping("/get")
     public ResponseEntity<Response> getAll(){
         return ResponseHandler.ok(this.addressService.getAll());
+    }
+
+    @DeleteMapping("/delete/{addressId}")
+    public ResponseEntity<Response> delete(@PathVariable Long addressId){
+        return ResponseHandler.ok(this.addressService.deleteAddress(addressId));
     }
 }

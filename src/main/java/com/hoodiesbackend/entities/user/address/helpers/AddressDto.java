@@ -22,4 +22,8 @@ public class AddressDto {
     private String number;
 
     private String zip;
+
+    private Boolean activeAddress;
+
+    private Boolean mainAddress;
 }

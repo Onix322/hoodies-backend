@@ -12,6 +12,8 @@ public class AddressMapper {
                 .state(address.getState())
                 .street(address.getStreet())
                 .zip(address.getZip())
+                .activeAddress(address.getActiveAddress())
+                .mainAddress(address.getMainAddress())
                 .build();
     }
 }
