@@ -43,6 +43,11 @@ public class CartController {
         return ResponseHandler.ok(cartService.getCartLength(userId));
     }
 
+    @GetMapping("get-item/{cartItemId}")
+    public ResponseEntity<Response> getCartItemById(@PathVariable Long cartItemId){
+        return ResponseHandler.ok(cartService.getCartItemById(cartItemId));
+    }
+
     @DeleteMapping("delete/item/{cartId}/{itemId}")
     public ResponseEntity<Response> deleteItem(@PathVariable Long cartId, @PathVariable Long itemId){
         return ResponseHandler.ok(cartService.deleteItem(cartId, itemId));

@@ -1,6 +1,8 @@
 package com.hoodiesbackend.services.cart.cartItem;
 
 import com.hoodiesbackend.entities.cart.CartItem.CartItem;
+import com.hoodiesbackend.entities.cart.CartItem.helpers.CartItemDto;
+import com.hoodiesbackend.entities.cart.CartItem.helpers.CartItemMapper;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.cart.CartItemRepository;
@@ -42,6 +44,13 @@ public class CartItemService {
 
         return cartItemRepository.findCartItemByCartIdAndProductId(cartId, productId)
                 .orElseThrow(() -> new NotFoundException("Item not found in cart!"));
+    }
+
+    public CartItemDto findItem(Long cartItemId){
+        if(cartItemId < 1 ) throw new BadRequestException("Cart Id and Product id should be > 0");
+
+        return CartItemMapper.toDto(cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new NotFoundException("Item not found in cart!")));
     }
 
     public boolean delete(Long cartId, Long itemId){

@@ -1,11 +1,14 @@
 package com.hoodiesbackend.entities.product.helpers;
 
+import com.hoodiesbackend.entities.product.Product;
+
 public class ProductDto {
     private Long id;
     private String title;
     private Integer rating;
     private Size size;
     private Double price;
+    private ProductColor productColor;
     private ProductImage productImage;
     private Integer numberReviews;
     private Boolean availableForPurchase;
@@ -19,6 +22,15 @@ public class ProductDto {
         this.productImage = builder.productImage;
         this.availableForPurchase = builder.availableForPurchase;
         this.numberReviews = builder.numberReviews;
+        this.productColor = builder.productColor;
+    }
+
+    public ProductColor getProductColor() {
+        return productColor;
+    }
+
+    public void setProductColor(ProductColor productColor) {
+        this.productColor = productColor;
     }
 
     public Double getPrice() {
@@ -94,8 +106,14 @@ public class ProductDto {
         private ProductImage productImage = new ProductImage();
         private Integer numberReviews = 0;
         private Boolean availableForPurchase = true;
+        private ProductColor productColor = ProductColor.BLACK;
 
         public Builder() {}
+
+        public Builder setProductColor(ProductColor productColor) {
+            this.productColor = productColor;
+            return this;
+        }
 
         public Builder setNumberReviews(Integer numberReviews) {
             this.numberReviews = numberReviews;

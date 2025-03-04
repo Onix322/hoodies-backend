@@ -2,6 +2,7 @@ package com.hoodiesbackend.services.cart;
 
 import com.hoodiesbackend.entities.cart.Cart;
 import com.hoodiesbackend.entities.cart.CartItem.CartItem;
+import com.hoodiesbackend.entities.cart.CartItem.helpers.CartItemDto;
 import com.hoodiesbackend.entities.cart.helpers.CartDto;
 import com.hoodiesbackend.entities.cart.helpers.CartMapper;
 import com.hoodiesbackend.entities.product.Product;
@@ -100,5 +101,9 @@ public class CartService {
     public Integer getCartLength(Long cartId){
         return cartItemService.findAllByCartId(cartId)
                 .size();
+    }
+
+    public CartItemDto getCartItemById(Long cartItemId){
+        return cartItemService.findItem(cartItemId);
     }
 }

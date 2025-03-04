@@ -14,6 +14,7 @@ public class ProductMapper {
                 .setProductImage(product.getProductImages().get(0))
                 .setAvailableForPurchase(product.getAvailableForPurchase())
                 .setNumberReviews(product.getNumberReviews())
+                .setProductColor(product.getProductColor())
                 .build();
 
     }
