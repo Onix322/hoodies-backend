@@ -11,6 +11,6 @@ public class OrderDetails {
     private Cart cart;
     private Address address;
     private String comments;
-    private LocalDateTime createdAt;
-    private LocalDateTime finalizedAt;
+    private String createdAt;
+    private String finalizedAt;
 }

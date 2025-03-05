@@ -44,6 +44,13 @@ public class OrderService {
                 .map(cartItem -> cartItemService.findItemForCart(cart.getId(), cartItem.getId()))
                 .toList();
 
+        double totalPrice = 0.0;
+
+        for(CartItem item : itemsList){
+            totalPrice += (item.getProduct().getPrice() * item.getQuantity());
+        }
+
+        cart.setTotalPrice(totalPrice);
         cart.setProducts(itemsList);
 
         Order order = orderRepository.save(OrderMapper.toOrder(orderDetails));

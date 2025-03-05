@@ -1,5 +1,6 @@
 package com.hoodiesbackend.entities.order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hoodiesbackend.entities.order.OrderItem.OrderItem;
 import com.hoodiesbackend.entities.order.helpers.StatusOrder;
 import com.hoodiesbackend.entities.user.User;
@@ -40,6 +41,7 @@ public class Order {
 
     @Column(name = "created_at")
     @NotNull(message = "Created at is mandatory")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     @Column(name = "finalized_at")

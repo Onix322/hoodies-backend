@@ -9,6 +9,7 @@ import com.hoodiesbackend.entities.order.helpers.OrderDto;
 import com.hoodiesbackend.entities.user.address.helpers.AddressMapper;
 import com.hoodiesbackend.entities.user.helpers.UserMapper;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class OrderMapper {
                 .statusOrder(StatusOrder.CONFIRMED)
                 .totalPrice(orderDetails.getCart().getTotalPrice())
                 .address(orderDetails.getAddress())
-                .createdAt(orderDetails.getCreatedAt())
+                .createdAt(LocalDateTime.parse(orderDetails.getCreatedAt()))
                 .comments(orderDetails.getComments())
                 .build();
     }
