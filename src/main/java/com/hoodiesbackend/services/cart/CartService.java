@@ -5,6 +5,7 @@ import com.hoodiesbackend.entities.cart.CartItem.CartItem;
 import com.hoodiesbackend.entities.cart.CartItem.helpers.CartItemDto;
 import com.hoodiesbackend.entities.cart.helpers.CartDto;
 import com.hoodiesbackend.entities.cart.helpers.CartMapper;
+import com.hoodiesbackend.entities.cart.helpers.SelectedCartItems;
 import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.exceptions.BadRequestException;
 import com.hoodiesbackend.exceptions.NotFoundException;
@@ -13,7 +14,9 @@ import com.hoodiesbackend.services.cart.cartItem.CartItemService;
 import com.hoodiesbackend.services.product.ProductService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class CartService {
@@ -90,6 +93,25 @@ public class CartService {
         }
 
         cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getProduct().getPrice()));
+        this.update(cart);
+        return true;
+    }
+
+    public Boolean deleteSelectedItems(SelectedCartItems selectedCartItems){
+
+        AtomicReference<Double> totalPrice = new AtomicReference<>(0.0);
+        List<CartItem> cartItems = new ArrayList<>();
+
+        selectedCartItems.getCartItemsIds()
+                .forEach(id -> cartItems.add(this.cartItemService.findItemForCart(selectedCartItems.getCartId(), id)));
+        cartItems.forEach(item -> {
+            totalPrice.updateAndGet(v -> v + item.getQuantity() * item.getProduct().getPrice());
+            this.cartItemService.delete(selectedCartItems.getCartId(), item.getId());
+        });
+
+        Cart cart = this.getCartById(selectedCartItems.getCartId());
+
+        cart.setTotalPrice(cart.getTotalPrice() - totalPrice.get());
         this.update(cart);
         return true;
     }

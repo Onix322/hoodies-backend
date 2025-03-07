@@ -2,11 +2,14 @@ package com.hoodiesbackend.controllers;
 
 import com.hoodiesbackend.entities.cart.Cart;
 import com.hoodiesbackend.entities.cart.CartItem.CartItem;
+import com.hoodiesbackend.entities.cart.helpers.SelectedCartItems;
 import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;
 import com.hoodiesbackend.services.cart.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/cart")
@@ -51,5 +54,10 @@ public class CartController {
     @DeleteMapping("delete/item/{cartId}/{itemId}")
     public ResponseEntity<Response> deleteItem(@PathVariable Long cartId, @PathVariable Long itemId){
         return ResponseHandler.ok(cartService.deleteItem(cartId, itemId));
+    }
+
+    @PutMapping("delete/items")
+    public ResponseEntity<Response> deleteSelectedItems(@RequestBody SelectedCartItems selectedCartItems){
+        return ResponseHandler.ok(cartService.deleteSelectedItems(selectedCartItems));
     }
 }
