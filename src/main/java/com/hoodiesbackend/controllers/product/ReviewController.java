@@ -26,4 +26,9 @@ public class ReviewController {
     public ResponseEntity<Response> getAll(){
         return ResponseHandler.ok(reviewService.getAll());
     }
+
+    @GetMapping("/get/{productId}")
+    public ResponseEntity<Response> getAllFor(@PathVariable Long productId){
+        return ResponseHandler.ok(reviewService.getAllFor(productId));
+    }
 }

@@ -5,6 +5,9 @@ import com.hoodiesbackend.entities.product.Product;
 public class ProductMapper {
 
     public static ProductDto toDto(Product product){
+
+        System.out.println(product.getProductImages());
+
         return new ProductDto.Builder()
                 .setId(product.getId())
                 .setSize(product.getSize())

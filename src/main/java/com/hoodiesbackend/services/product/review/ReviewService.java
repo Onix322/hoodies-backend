@@ -22,7 +22,7 @@ public class ReviewService {
         this.productService = productService;
     }
 
-    public ReviewDto create(Review review) {
+    public Review create(Review review) {
 
         Product product = productService.read(review.getProduct().getId());
         product.setNumberReviews(product.getNumberReviews() + 1);
@@ -32,11 +32,18 @@ public class ReviewService {
         product.setRating(AverageReviews.calculateAverageForAllReviews(product, reviewRepository));
 
         productService.update(product);
-        return ReviewMapper.toDto(reviewSaved);
+        return reviewSaved;
     }
 
     public List<ReviewDto> getAll() {
         return reviewRepository.findAll()
+                .stream()
+                .map(ReviewMapper::toDto)
+                .toList();
+    }
+
+    public List<ReviewDto> getAllFor(Long productId) {
+        return reviewRepository.findAllByProductId(productId)
                 .stream()
                 .map(ReviewMapper::toDto)
                 .toList();
