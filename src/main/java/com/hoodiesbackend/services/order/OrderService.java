@@ -107,21 +107,6 @@ public class OrderService {
         return OrderMapper.toDto(order);
     }
 
-    @Transactional
-    public OrderDto delete(Long orderId) {
-
-        if (orderId < 1) throw new BadRequestException("Order id should be > 0");
-
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new NotFoundException("Order not found!"));
-
-        order.setStatusOrder(StatusOrder.CANCELED);
-
-        this.update(order);
-
-        return OrderMapper.toDto(order);
-    }
-
     public OrderDto changeStatus(@NonNull ChangeStatusOrder changeStatusOrder) {
 
         if (changeStatusOrder.getOrderId() < 1 || changeStatusOrder.getStatusOrder() == null) {

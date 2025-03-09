@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Entity
 @Table(name = "review")
@@ -16,7 +18,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "message", nullable = false)
+    @Column(name = "message", nullable = false, columnDefinition = "TEXT")
     @NotNull(message = "Message is mandatory!")
     private String message;
 

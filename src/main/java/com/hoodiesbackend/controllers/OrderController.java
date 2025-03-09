@@ -23,11 +23,6 @@ public class OrderController {
         return ResponseHandler.ok(orderService.create(cart));
     }
 
-    @DeleteMapping("/remove/{orderId}")
-    public ResponseEntity<Response> remove(@PathVariable Long orderId) {
-        return ResponseHandler.ok(orderService.delete(orderId));
-    }
-
     @GetMapping("/get")
     public ResponseEntity<Response> get() {
         return ResponseHandler.ok(orderService.getAll());

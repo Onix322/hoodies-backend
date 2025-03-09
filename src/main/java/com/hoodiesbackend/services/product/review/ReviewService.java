@@ -4,6 +4,8 @@ import com.hoodiesbackend.entities.product.Product;
 import com.hoodiesbackend.entities.product.review.Review;
 import com.hoodiesbackend.entities.product.review.helpers.ReviewDto;
 import com.hoodiesbackend.entities.product.review.helpers.ReviewMapper;
+import com.hoodiesbackend.entities.product.review.helpers.ReviewModifierHelper;
+import com.hoodiesbackend.exceptions.NotFoundException;
 import com.hoodiesbackend.repositories.product.ReviewRepository;
 import com.hoodiesbackend.services.product.ProductService;
 import com.hoodiesbackend.services.product.review.helpers.AverageReviews;
@@ -35,6 +37,16 @@ public class ReviewService {
         return reviewSaved;
     }
 
+    public ReviewDto update(ReviewModifierHelper reviewModifierHelper){
+        Review review = reviewRepository.findById(reviewModifierHelper.getReviewId())
+                .orElseThrow(() -> new NotFoundException("Review not found!"));
+
+        review.setMessage(reviewModifierHelper.getMessage());
+        review.setScore(reviewModifierHelper.getScore());
+
+        return ReviewMapper.toDto(reviewRepository.save(review));
+    }
+
     public List<ReviewDto> getAll() {
         return reviewRepository.findAll()
                 .stream()
@@ -47,5 +59,16 @@ public class ReviewService {
                 .stream()
                 .map(ReviewMapper::toDto)
                 .toList();
+    }
+
+    public ReviewDto getReview(Long reviewId){
+
+        Review review = this.reviewRepository.findById(reviewId).orElseThrow(() -> new NotFoundException("Review not found!"));
+
+        Product product = this.productService.read(review.getProduct().getId());
+
+        review.setProduct(product);
+
+        return ReviewMapper.toDto(review);
     }
 }
