@@ -11,4 +11,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     List<Review> findAllByProductIdAndScore(Long productId, Integer score);
     List<Review> findAllByProductId(Long productId);
+    List<Review> findAllByUserId(Long userId);
 }

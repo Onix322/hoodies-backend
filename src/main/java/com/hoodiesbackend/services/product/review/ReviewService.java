@@ -44,6 +44,10 @@ public class ReviewService {
         review.setMessage(reviewModifierHelper.getMessage());
         review.setScore(reviewModifierHelper.getScore());
 
+        Product product = productService.read(review.getProduct().getId());
+
+        product.setRating(AverageReviews.calculateAverageForAllReviews(product, reviewRepository));
+
         return ReviewMapper.toDto(reviewRepository.save(review));
     }
 
@@ -56,6 +60,13 @@ public class ReviewService {
 
     public List<ReviewDto> getAllFor(Long productId) {
         return reviewRepository.findAllByProductId(productId)
+                .stream()
+                .map(ReviewMapper::toDto)
+                .toList();
+    }
+
+    public List<ReviewDto> getUserReviews(Long userId) {
+        return reviewRepository.findAllByUserId(userId)
                 .stream()
                 .map(ReviewMapper::toDto)
                 .toList();
