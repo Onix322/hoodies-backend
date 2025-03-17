@@ -106,9 +106,6 @@
             <version>1.18.34</version>
         </dependency>
     </dependencies>
-
-
-
     <build>
         <plugins>
             <plugin>
@@ -121,5 +118,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

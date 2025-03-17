@@ -2,13 +2,14 @@ package com.hoodiesbackend.entities.product;
 
 import com.hoodiesbackend.entities.product.helpers.ProductColor;
 import com.hoodiesbackend.entities.product.helpers.ProductImage;
+import com.hoodiesbackend.entities.product.helpers.Size;
 import com.hoodiesbackend.entities.product.review.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.hoodiesbackend.entities.product.helpers.Size;
+
 
 import java.util.List;
 
