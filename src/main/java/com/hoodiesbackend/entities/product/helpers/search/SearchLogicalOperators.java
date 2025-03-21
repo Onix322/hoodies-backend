@@ -4,5 +4,5 @@ public enum SearchLogicalOperators {
     AND,
     OR,
     XOR,
-    NOT
+    NOT,
 }
