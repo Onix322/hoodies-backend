@@ -77,10 +77,12 @@ public class SearchService {
         }
 
         if (productSearch.getRating() != null) {
-            this.queryService.addOpenParentheses();
-            this.queryService.addColumnName("rating")
-                    .addEqual(productSearch.getRating());
-            this.queryService.addCloseParentheses();
+            this.queryService.queryFromList(
+                    List.copyOf(productSearch.getRating()),
+                    "rating",
+                    SearchLogicalOperators.OR,
+                    SearchMatchingOperators.EQUALS
+            );
         }
 
         if (productSearch.getSize() != null) {

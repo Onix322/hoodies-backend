@@ -18,6 +18,6 @@ public class ProductSearch {
     private Double price;
     private List<ProductColor> productColor;
     private String description;
-    private Integer rating;
+    private List<Integer> rating;
     private List<Size> size;
 }
