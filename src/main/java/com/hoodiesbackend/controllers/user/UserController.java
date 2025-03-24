@@ -1,5 +1,6 @@
 package com.hoodiesbackend.controllers.user;
 
+import com.hoodiesbackend.entities.user.helpers.ActivationStatus;
 import com.hoodiesbackend.entities.user.helpers.LogIn;
 import com.hoodiesbackend.response.Response;
 import com.hoodiesbackend.response.ResponseHandler;
@@ -38,9 +39,14 @@ public class UserController {
         return ResponseHandler.ok(userService.login(body));
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<Response> getAll() {
-        return ResponseHandler.fail(HttpStatus.LOCKED, "No access");
+    @GetMapping("/get/activated")
+    public ResponseEntity<Response> getAllActivated() {
+        return ResponseHandler.ok(this.userService.getAll(ActivationStatus.ACTIVATED));
+    }
+
+    @GetMapping("/get/deactivated")
+    public ResponseEntity<Response> getAllDeactivated() {
+        return ResponseHandler.ok(this.userService.getAll(ActivationStatus.DEACTIVATED));
     }
 
     @PutMapping("/put")

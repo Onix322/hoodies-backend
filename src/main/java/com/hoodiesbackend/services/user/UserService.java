@@ -17,6 +17,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -72,6 +73,13 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("User not found!"));
 
         return UserMapper.toUserGetDto(user);
+    }
+
+    public List<UserGetDto> getAll(ActivationStatus activationStatus){
+        return this.userRepository.readAllByActivationStatus(activationStatus)
+                .stream()
+                .map(UserMapper::toUserGetDto)
+                .toList();
     }
 
     public String login(LogIn body) {
